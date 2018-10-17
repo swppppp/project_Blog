@@ -31,7 +31,7 @@ for(Cookie cookie2 : cookies){
               <a class="nav-link" href="post.html">Free Board</a>
             </li>
             <%
-            if(cookies == null || cookies.length == 0){
+            if(cookie == null){
             %>
             <li class="nav-item">
               <a class="nav-link" href="../user/join_form.jsp">Join</a>
