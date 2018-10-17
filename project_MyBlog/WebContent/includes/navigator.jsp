@@ -34,20 +34,20 @@ for(Cookie cookie2 : cookies){
             if(cookies == null || cookies.length == 0){
             %>
             <li class="nav-item">
-              <a class="nav-link" href="../user/logout_action.jsp">Logout</a>
-            </li>
-            <%
-            }else{
-            %>
-            <li class="nav-item">
               <a class="nav-link" href="../user/join_form.jsp">Join</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../user/login_form.jsp">Login</a>
             </li>
+            <%
+            }else{
+            %>
+            <li class="nav-item">
+              <a class="nav-link" href="../user/logout_action.jsp">Logout</a>
+            </li>
 			<%
             }
-			%>            
+			%>
           </ul>
         </div>
       </div>

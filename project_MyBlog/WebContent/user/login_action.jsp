@@ -20,14 +20,13 @@ if(user!=null){
 	Cookie cookie = new Cookie("loginId", user.getId());
 	cookie.setPath("/");
 	response.addCookie(cookie);
-	System.out.println("쿠키: "+cookie);
 	response.sendRedirect(application.getContextPath()+"/index2.jsp");
 }else{
-	%>
-	<script>
-	alert("회원이 아닙니다");
-	history.back();
-	</script>
-	<%  
-	}
-	%>
+%>
+<script>
+  alert("회원이 아닙니다");
+  history.back();
+</script>
+<%  
+}
+%>
