@@ -19,6 +19,7 @@ User user = dao.certify(id, passwd); //로그인시도한 user객체 반환
 if(user!=null){
 	Cookie cookie = new Cookie("loginId", user.getId());
 	cookie.setPath("/");
+	cookie.setMaxAge(-1);
 	response.addCookie(cookie);
 	response.sendRedirect(application.getContextPath()+"/index2.jsp");
 }else{

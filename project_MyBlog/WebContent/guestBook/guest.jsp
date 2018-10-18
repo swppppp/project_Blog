@@ -1,4 +1,25 @@
+<%@page import="kr.or.kosta.blog.guestbook.dto.Guestbook"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.or.kosta.blog.guestbook.dao.GuestbookDao"%>
+<%@page import="kr.or.kosta.blog.user.dao.JdbcDaoFactory"%>
+<%@page import="kr.or.kosta.blog.user.dao.DaoFactory"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%
+// 방명록 리스트를 보여주기 위해 guestbook dao생성
+List<Guestbook> list = null;
+DaoFactory factory = new JdbcDaoFactory();
+GuestbookDao dao = factory.getGuestbookDao();
+list = dao.listAll();
+
+// 로그인여부 확인을 위한 쿠키확인
+Cookie[] cookies = request.getCookies();
+Cookie loginCookie = null;
+for(Cookie cookie : cookies){
+	if(cookie.getName().equals("loginId")){
+		loginCookie = cookie;
+	}
+}
+%>
 <!DOCTYPE html>
 <html>
 <!-- 
@@ -59,10 +80,19 @@
 <!-- ----내가 만들어쓴거-방명록 ui------------------------------------------------------------------- -->
 		  <div class="control-group">
 		  	<div>
-		  	<textarea rows="4" cols="50" name="contents">
-로그인시 활성화, 비 로그인시 비활성화
-            </textarea>
-              <button type="submit" class="btn btn-primary" id="sendMessageButton">확인</button>
+		  	<%
+		  	if(loginCookie != null){
+		  	%>
+		  	<textarea rows="4" cols="50" name="contents" placeholder="Leave a Message..."></textarea>
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">확인</button>
+			<%
+			}else{
+			%>
+			<textarea rows="4" cols="50" disabled placeholder="need a login"></textarea>
+            <button type="button" disabled class="btn btn-primary" id="sendMessageButton">확인</button>
+            <%
+			}
+            %>
 		  	</div>
           </form>
 		  
@@ -80,10 +110,22 @@
 		      <td>등록일</td>
 		      </tr>
 		      </thead>
+		      <tbody>
+		     <%if(list != null){
+		    	 for(Guestbook guestbook : list){
+		    %>
+		    <tr>
+		    	<td><%=guestbook.getUser_id() %></td>
+		    	<td><%=guestbook.getContents() %></td>
+		    	<td><%=guestbook.getRegdate() %></td>
+		    </tr>
+		    <%
+		    	 }
+		     }
+		     %>
+		      </tbody>
 		    </table>
-
 		  </div>
-
 <!-- ------------------------------------------------------------------------------------ -->
         </div>
       </div>
