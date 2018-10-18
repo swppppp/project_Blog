@@ -52,7 +52,7 @@ public class JdbcGuestbookDao implements GuestbookDao {
 
 	@Override
 	public List<Guestbook> listAll() throws Exception {
-		List<Guestbook>list = null;
+		List<Guestbook> list = null;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -97,7 +97,6 @@ public class JdbcGuestbookDao implements GuestbookDao {
 		guestbook.setContents(rs.getString("contents"));
 		guestbook.setUser_id(rs.getString("user_id"));
 		guestbook.setRegdate(rs.getString("REGDATE"));
-		System.out.println("guestbookid 가져오기...ㅠㅠㅠ");
 		guestbook.setGuestbook_id(rs.getInt("GUESTBOOK_ID"));
 		return guestbook;
 	}
