@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 
 import javax.sql.DataSource;
 
+import kr.or.kosta.blog.article.dao.ArticleDao;
+import kr.or.kosta.blog.article.dao.JdbcArticleDao;
 import kr.or.kosta.blog.board.dao.BoardDao;
 import kr.or.kosta.blog.board.dao.JdbcBoardDao;
 import kr.or.kosta.blog.guestbook.dao.GuestbookDao;
@@ -57,11 +59,19 @@ public class JdbcDaoFactory extends DaoFactory {
 		return dao;
 	}
 
-
-	
-	
-	
-	
+	@Override
+	public ArticleDao getArticleDao() {
+		ArticleDao dao = new JdbcArticleDao();
+		Class cls = dao.getClass();
+		Method method;
+		try {
+			method = cls.getMethod("setDataSource", DataSource.class);
+			method.invoke(dao, createDataSource());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dao;
+	}
 	
 //	public BarDao getBarDao() {...};
 //	public FooDao getFooDao() {...};
