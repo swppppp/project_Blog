@@ -1,19 +1,13 @@
-<%@page import="kr.or.kosta.blog.article.dto.Article"%>
-<%@page import="kr.or.kosta.blog.article.dao.ArticleDao"%>
-<%@page import="kr.or.kosta.blog.user.dao.JdbcDaoFactory"%>
-<%@page import="kr.or.kosta.blog.user.dao.DaoFactory"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%
-request.setCharacterEncoding("utf-8");
-// System.out.println("게시글 id: " + request.getParameter("article_id"));
-int article_id = Integer.parseInt(request.getParameter("article_id").trim());
-System.out.println("게시글 id: "+article_id);
-DaoFactory factory = new JdbcDaoFactory();
-ArticleDao dao = factory.getArticleDao();
-System.out.println("허허 조회수 올려줘요");
-dao.hitCountChange(article_id);
-Article article = dao.read(article_id);
-System.out.println("조회수: "+article.getHitcount());
+//작성자 아이디값 확인
+String writer = "";
+Cookie[] cookies = request.getCookies();
+for(Cookie cookie:cookies){
+	if(cookie.getName().equals("loginId")){
+		writer = cookie.getValue();
+	}
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -66,27 +60,25 @@ System.out.println("조회수: "+article.getHitcount());
     </header>
 
 	<!-- Page Content -->
-article페이지 입니다.<br>
+게시글 작성 페이지 입니다.<br>
+<form action="article_action.jsp">
 	<table border="1px black">
 		<tr>
 		  <td>글 제목</td>
-		  <td colspan="3"><%=article.getSubject() %></td>
+		  <td colspan="3">
+		  	<input type="text" name="subject">
+		  </td>
 		</tr>
 		<tr>
-		  <td>작성자</td><td><%=article.getWriter() %></td>
-		  <td>작성일</td><td><%=article.getRegdate() %></td>
+		  <td>작성자</td><td><input type="text" value="<%=writer %>" name="writer"></td>
+		  <td>비밀번호</td><td><input type="text" name="passwd"></td>
 		</tr>
 		<tr>
-		  <td>아이피</td><td><%=article.getIp() %></td>
-		  <td>조회수</td><td><%=article.getHitcount() %></td>
-		</tr>
-		<tr>
-		  <td colspan="4"><%=article.getContent() %></td>
+		  <td colspan="4"><input type="text" name="content"></td>
 		</tr>
 	</table>
-<button>목록</button>
-<button>답글</button>
-<button>수정</button>
+<input type="submit" value="등록하기">
+</form>
 
     <!-- Footer -->
     <footer>

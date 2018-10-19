@@ -23,6 +23,5 @@ for(Cookie cookie : cookies){
 DaoFactory factory = new JdbcDaoFactory();
 GuestbookDao dao = factory.getGuestbookDao();
 dao.create(guestbook);
-System.out.println(guestbook);
 %>
 <jsp:forward page="/guestBook/guest.jsp"/>

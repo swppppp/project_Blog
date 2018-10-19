@@ -128,6 +128,12 @@ List<Article> list = dao.listAll();
       <a href="#">10</a>
       <a href="#">&raquo;</a>
     </div>
+<button>홈으로</button>
+<button>글쓰기</button>
+    <!-- Footer -->
+    <footer>
+		<jsp:include page="../includes/footer.jsp"/>
+    </footer>
 	
 
 

@@ -119,10 +119,9 @@ public class JdbcArticleDao implements ArticleDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "UPDATE article \r\n" + 
-					 "SET    hitcount = (SELECT hitcount \r\n" + 
+					 "SET    hitcount = (SELECT hitcount+1 \r\n" + 
 					 "                   FROM   article \r\n" + 
 					 "                   WHERE  article_id = ?) \r\n" + 
-					 "                  + 1 \r\n" + 
 					 "WHERE  article_id = ?";
 		try {
 			con = dataSource.getConnection();
@@ -211,7 +210,7 @@ public class JdbcArticleDao implements ArticleDao {
 		article.setBoard_id(rs.getInt("board_id"));
 		article.setContent(rs.getString("content"));
 		article.setGroup_no(rs.getInt("group_no"));
-		article.setHitcount(1);
+		article.setHitcount(rs.getInt("hitcount"));
 		article.setIp(rs.getString("ip"));
 		article.setLevel_no(rs.getInt("level_no"));
 		article.setOrder_no(rs.getInt("order_no"));
