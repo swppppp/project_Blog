@@ -11,6 +11,7 @@ int article_id = Integer.parseInt(request.getParameter("article_id"));
 DaoFactory factory = new JdbcDaoFactory();
 ArticleDao dao = factory.getArticleDao();
 Article article = dao.read(article_id);
+article.setHitcount(article.getHitcount()+1);
 %>
 <!DOCTYPE html>
 <html>

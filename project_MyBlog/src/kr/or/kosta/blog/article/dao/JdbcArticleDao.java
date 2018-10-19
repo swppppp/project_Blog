@@ -31,19 +31,35 @@ public class JdbcArticleDao implements ArticleDao {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO article \r\n" +
-					 "VALUES		(?, \r\n" + //subject
-					 "				 ?, \r\n" + //writer
-					 "				 ?, \r\n" + //passwd
-					 "				 ?, \r\n" ; //content
-					 	
+		String sql = "INSERT INTO article \r\n" + 
+				"            (article_id, \r\n" + 
+				"             board_id, \r\n" + 
+				"             writer, \r\n" + 
+				"             subject, \r\n" + 
+				"             content, \r\n" + 
+				"             ip, \r\n" + 
+				"             passwd, \r\n" + 
+				"             group_no, \r\n" + 
+				"             level_no, \r\n" + 
+				"             order_no) \r\n" + 
+				"VALUES      (article_id_seq.NEXTVAL, \r\n" + 
+				"             1, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             article_id_seq.CURRVAL, \r\n" + 
+				"             0, \r\n" + 
+				"             0)" ; 
 		try {
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, article.getSubject());
-			pstmt.setString(2, article.getWriter());
-			pstmt.setString(3, article.getPasswd());
-			pstmt.setString(4, article.getContent());
+			pstmt.setString(1, article.getWriter());
+			pstmt.setString(2, article.getSubject());
+			pstmt.setString(3, article.getContent());
+			pstmt.setString(4, article.getIp());
+			pstmt.setString(5, article.getPasswd());
 			pstmt.executeUpdate();
 		}finally {
 			try {
@@ -53,6 +69,11 @@ public class JdbcArticleDao implements ArticleDao {
 		}
 	}
 
+	@Override
+	public void createReply(Article article) throws Exception {
+		
+	}
+	
 	@Override
 	public Article read(int article_id) throws Exception {
 		Article article = null;
@@ -94,6 +115,30 @@ public class JdbcArticleDao implements ArticleDao {
 	}
 
 	@Override
+	public void hitCountChange(int article_id) throws Exception {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE article \r\n" + 
+					 "SET    hitcount = (SELECT hitcount \r\n" + 
+					 "                   FROM   article \r\n" + 
+					 "                   WHERE  article_id = ?) \r\n" + 
+					 "                  + 1 \r\n" + 
+					 "WHERE  article_id = ?";
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, article_id);
+			pstmt.setInt(2, article_id);
+			pstmt.executeQuery();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null)   con.close();
+			}catch (Exception e) {}
+		}
+	}
+	
+	@Override
 	public void update(Article article) throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -101,8 +146,21 @@ public class JdbcArticleDao implements ArticleDao {
 
 	@Override
 	public void delete(int article_id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM article \r\n" + 
+					 "WHERE  article_id = ?";
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, article_id);
+			pstmt.executeQuery();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			}catch (Exception e) {}
+		}
 	}
 
 	@Override
@@ -143,7 +201,6 @@ public class JdbcArticleDao implements ArticleDao {
 				if(con != null) con.close();
 			}catch(Exception e) {}
 		}
-		
 		return list;
 	}
 
@@ -164,6 +221,7 @@ public class JdbcArticleDao implements ArticleDao {
 		article.setWriter(rs.getString("writer"));
 		return article;
 	}
+
 
 
 }

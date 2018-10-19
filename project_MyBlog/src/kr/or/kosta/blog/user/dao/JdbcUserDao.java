@@ -110,8 +110,6 @@ public class JdbcUserDao implements UserDao {
 				if(con != null)   con.close();
 			}catch (Exception e) {}
 		}
-		
-
 	}
 
 	@Override
