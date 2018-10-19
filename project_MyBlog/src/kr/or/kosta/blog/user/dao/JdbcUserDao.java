@@ -62,7 +62,7 @@ public class JdbcUserDao implements UserDao {
 				     "       name, \r\n" + 
 				     "       passwd, \r\n" + 
 				     "       email, \r\n" + 
-				     "       TO_CHAR(regdate, 'YYYY\"��??\" MM\"�썡\" DD\"�씪\" DAY') regdate \r\n" + 
+				     "       TO_CHAR(regdate, 'YYYY\\\"년\\\" MM\\\"월\\\" DD\\\"일\\\" DAY') regdate \r\n" + 
 				     "FROM   users \r\n" + 
 				     "WHERE  id = ?";
 		try {

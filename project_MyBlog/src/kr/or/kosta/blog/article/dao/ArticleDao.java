@@ -9,7 +9,7 @@ public interface ArticleDao {
 	public void create(Article article) throws Exception;
 	
 	// 게시글상세
-	public Article read() throws Exception;
+	public Article read(int article_id) throws Exception;
 	
 	// 게시글 수정
 	public void update(Article article) throws Exception;

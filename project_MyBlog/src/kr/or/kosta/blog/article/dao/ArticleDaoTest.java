@@ -18,6 +18,9 @@ public class ArticleDaoTest {
 			for (Article article : list) {
 				System.out.println(article);
 			}
+			System.out.println("게시글 read테스트-----");
+			Article article = dao.read(1);
+			System.out.println(article);
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
