@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%
+//아이디 기억을 위한 쿠키값 확인
+Cookie rcookie = null;
+Cookie[] cookies = request.getCookies();
+for(Cookie cookie:cookies){
+	if(cookie.getName().equals("rememberId")){
+		rcookie = cookie;
+	}
+}
+%>
 <!DOCTYPE html>
 <html>
 <!-- 
@@ -59,7 +69,18 @@
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Id</label>
+                <%if(rcookie==null){
+                %>
                 <input type="text" class="form-control" placeholder="Id" id="id" name="id" required data-validation-required-message="Please enter your id.">
+            	<input type="checkbox" name="rememberId" value="remember"> Remember Id<br>
+				<%
+                }else{
+				%>
+                <input type="text" class="form-control" value="<%=rcookie.getValue() %>" id="id" name="id" required data-validation-required-message="Please enter your id.">
+            	<input type="checkbox" name="rememberId" value="remember" checked> Remember Id<br>
+				<%
+                }
+				%>				
                 <p class="help-block text-danger"></p>
               </div>
             </div>
