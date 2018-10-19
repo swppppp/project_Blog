@@ -94,8 +94,9 @@ List<Article> list = dao.listAll();
           for(int i=0; i<list.size(); i++){
         	  Article article = list.get(i);
           %>
-          <form>
-               <tr class="<%= (i%2)== 0 ? "w3-white" : "" %>" >
+          <form action="article.jsp">
+          <input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
+               <tr class="<%= (i%2)== 0 ? "w3-white" : "" %>" onclick="location.href='article.jsp?article_id=<%=article.getArticle_id() %>'" >
                 <td><%=(i+1) %></td>
                 <td><%=article.getSubject() %></td>
                 <td><%=article.getWriter() %></td>

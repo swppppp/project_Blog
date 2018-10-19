@@ -28,7 +28,7 @@ for(Cookie cookie2 : cookies){
               <a class="nav-link" href="../guestBook/guest.jsp">Guest Book</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="post.html">Free Board</a>
+              <a class="nav-link" href="../board/board.jsp">Free Board</a>
             </li>
             <%
             if(cookie == null){
