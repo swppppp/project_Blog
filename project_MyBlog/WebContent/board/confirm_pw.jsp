@@ -8,6 +8,9 @@
 int article_id = Integer.parseInt(request.getParameter("article_id"));
 String whatAction = request.getParameter("whatAction");
 String user_id = request.getParameter("user_id");
+// 비밀번호일치여부에 따른 확인값
+String check=request.getParameter("checkResult");
+System.out.println("check값: "+check);
 
 UserDao dao = (UserDao)application.getAttribute("userDao");
 User user = dao.read(user_id);
@@ -71,6 +74,14 @@ User user = dao.read(user_id);
           <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
           <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
           <form action="confirm_action.jsp" method="post" name="sentMessage" id="contactForm" >
+          <%if(check == null || check.length()==0){
+          %>
+          <span style="display:none; color:red;">비밀번호를 확인해 주세요</span>
+          <%}else{ 
+          %>
+          <span style="color:red;">비밀번호를 확인해 주세요</span>	  
+          <%}
+          %>
           
 <!-- ----내가 만들어쓴거------------------------------------------------------------------- -->
             <div class="control-group">

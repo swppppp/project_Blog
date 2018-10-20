@@ -14,8 +14,7 @@ if(id == null || passwd == null){
 }
 
 //userDao를 이용, 회원가입여부 체크
-DaoFactory factory = (DaoFactory)application.getAttribute("factory");
-UserDao dao = factory.getUserDao();
+UserDao dao = (UserDao)application.getAttribute("userDao");
 User user = dao.certify(id, passwd); //로그인시도한 user객체 반환
 if(user!=null){
 	Cookie cookie = new Cookie("loginId", user.getId());
@@ -43,6 +42,7 @@ if(user!=null){
 	}
 	response.sendRedirect(application.getContextPath()+"/index2.jsp");
 }else{
+	// 되돌아가서 틀렸음을 알려주기
 %>
 <script>
   alert("회원이 아닙니다");
