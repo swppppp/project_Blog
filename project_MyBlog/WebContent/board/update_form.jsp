@@ -63,8 +63,6 @@ Article article = dao.read(article_id);
 
 	<!-- Content -->
 	<div class="container">
-	글 수정할거야<br>
-article_id = <%=request.getParameter("article_id") %>
 	<form action="update_action.jsp" method="post" name="sendMessage" id="contactForm">
 	<input type="hidden" name="article_id" value="<%=article_id %>">
 	<table border="1px black">
@@ -76,22 +74,15 @@ article_id = <%=request.getParameter("article_id") %>
 		</tr>
 		<tr>
 		  <td><label>작성자</label></td>
-		  <td>
-		  <input type="text" readonly class="form-control" value="<%=article.getWriter() %>">
-		  </td>
+		  <td><label><%=article.getWriter() %></label></td>
 		  <td><label>작성일</label></td>
-		  <td><input type="text" readonly class="form-control" value="<%=article.getRegdate() %>">
-		  </td>
+		  <td><label><%=article.getRegdate() %></label></td>
 		</tr>
 		<tr>
 		  <td><label>아이피</label></td>
-		  <td>
-		  <input type="text" readonly class="form-control" value="<%=article.getIp() %>">
-		  </td>
+		  <td><label><%=article.getIp() %></label></td>
 		  <td><label>조회수</label></td>
-		  <td>
-		  <input type="text" readonly class="form-control" value="<%=article.getHitcount() %>">
-		  </td>
+		  <td><label><%=article.getHitcount() %></label></td>
 		</tr>
 		<tr height="300px">
 		  <td colspan="4">

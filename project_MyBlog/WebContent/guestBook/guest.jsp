@@ -102,7 +102,7 @@ for(Cookie cookie : cookies){
           </div>
 		  <div>
 		  <br>
-		    <table border="1px solid black">
+		    <table class="container" border="1px solid black">
 		      <thead>
 		      <tr>
 		      <td>작성자</td>

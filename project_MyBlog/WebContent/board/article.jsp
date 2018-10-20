@@ -6,10 +6,18 @@
 <%
 request.setCharacterEncoding("utf-8");
 int article_id = Integer.parseInt(request.getParameter("article_id").trim());
-DaoFactory factory = (DaoFactory)application.getAttribute("factory");
-ArticleDao dao = factory.getArticleDao();
+ArticleDao dao = (ArticleDao)application.getAttribute("articleDao");
 dao.hitCountChange(article_id);
 Article article = dao.read(article_id);
+
+// 작성자 확인을 위해 로그인한 아이디값 저장
+String loginId = "";
+Cookie[] cookies = request.getCookies();
+for(Cookie cookie : cookies){
+	if(cookie.getName().equals("loginId")){
+		loginId = cookie.getValue();
+	}
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -80,12 +88,32 @@ article페이지 입니다.<br>
 		  <td colspan="4"><%=article.getContent() %></td>
 		</tr>
 	</table>
-<button>목록</button>
-<button>답글</button>
+<input type="submit" value="List" onclick="location.href='board.jsp'"><!-- 목록 -->
+<input type="submit" value="Reply" onclick="location.href='board.jsp'"><!-- 답글 -->
+<%
+if(article.getWriter().equals(loginId)){
+%>
+<form action="confirm_pw.jsp" method="post">
+<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
+<input type="hidden" name="user_id" value="<%=loginId %>">
+<input type="submit" value="Modify" name="whatAction"><!-- 수정 -->
+<input type="submit" value="Delete" name="whatAction"><!-- 삭제 -->
+</form>
+<%
+}else{
+%>
+<input type="submit" value="Modify" disabled><!-- 수정 -->
+<input type="submit" value="Delete" disabled><!-- 삭제 -->
+<%
+}
+%>
+<!-- 
 <form action="update_form.jsp">
 <input type="hidden" name="article_id" value="<%= article.getArticle_id()%>">
 <button>수정</button>
+onclick="location.href='update_form.jsp?article_id=<%=article.getArticle_id() %>'"
 </form>
+ -->
 
     <!-- Footer -->
     <footer>
