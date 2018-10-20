@@ -11,5 +11,4 @@ if(cookies!=null){
    }
  }
 }
-
 %>

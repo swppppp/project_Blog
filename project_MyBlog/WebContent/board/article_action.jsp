@@ -1,3 +1,4 @@
+<%@page import="java.net.InetAddress"%>
 <%@page import="kr.or.kosta.blog.article.dao.ArticleDao"%>
 <%@page import="kr.or.kosta.blog.user.dao.JdbcDaoFactory"%>
 <%@page import="kr.or.kosta.blog.user.dao.DaoFactory"%>
@@ -9,14 +10,13 @@ request.setCharacterEncoding("utf-8");
   <jsp:setProperty name="article" property="writer" param="writer"/>
   <jsp:setProperty name="article" property="subject" param="subject"/>
   <jsp:setProperty name="article" property="content" param="content"/>
-  <jsp:setProperty name="article" property="ip" value="<%=request.getLocalAddr() %>"/>
+  <jsp:setProperty name="article" property="ip" value="<%=InetAddress.getLocalHost().getHostAddress() %>"/>
   <jsp:setProperty name="article" property="passwd" param="passwd"/>
 </jsp:useBean>
 <%
-DaoFactory factory = new JdbcDaoFactory();
+DaoFactory factory = (DaoFactory)application.getAttribute("factory");
 ArticleDao dao = factory.getArticleDao();
 dao.create(article);
-System.out.print("게시글 생성 action: "+article);
+response.sendRedirect("/board/board.jsp");
 %>
-<jsp:forward page="/board/board.jsp"/>
 

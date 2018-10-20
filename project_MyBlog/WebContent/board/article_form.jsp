@@ -61,7 +61,7 @@ for(Cookie cookie:cookies){
 
 	<!-- Page Content -->
 게시글 작성 페이지 입니다.<br>
-<form action="article_action.jsp">
+<form action="article_action.jsp" method="post">
 	<table border="1px black">
 		<tr>
 		  <td>글 제목</td>
@@ -70,8 +70,8 @@ for(Cookie cookie:cookies){
 		  </td>
 		</tr>
 		<tr>
-		  <td>작성자</td><td><input type="text" value="<%=writer %>" name="writer"></td>
-		  <td>비밀번호</td><td><input type="text" name="passwd"></td>
+		  <td>작성자</td><td><input type="text" value="<%=writer %>" name="writer" readonly></td>
+		  <td>비밀번호</td><td><input type="password" name="passwd"></td>
 		</tr>
 		<tr>
 		  <td colspan="4"><input type="text" name="content"></td>

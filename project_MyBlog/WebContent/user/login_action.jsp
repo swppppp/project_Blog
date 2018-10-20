@@ -14,7 +14,7 @@ if(id == null || passwd == null){
 }
 
 //userDao를 이용, 회원가입여부 체크
-DaoFactory factory = new JdbcDaoFactory();
+DaoFactory factory = (DaoFactory)application.getAttribute("factory");
 UserDao dao = factory.getUserDao();
 User user = dao.certify(id, passwd); //로그인시도한 user객체 반환
 if(user!=null){

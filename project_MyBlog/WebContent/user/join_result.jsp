@@ -57,11 +57,10 @@
 		  <p>Name: <%= user.getName()%></p>          	
 		  <p>Email: <%= user.getEmail()%></p>          	
 <!-- ---------------------------------------------------------------------------------------------------------------- -->
-
             <br>
             <div id="success"></div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton">Home?Login?</button>
+              <button type="submit" class="btn btn-primary" id="sendMessageButton" onclick="location.href='login_form.jsp'">Login</button>
             </div>
         </div>
       </div>

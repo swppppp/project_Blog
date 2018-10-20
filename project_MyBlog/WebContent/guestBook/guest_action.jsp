@@ -20,7 +20,8 @@ for(Cookie cookie : cookies){
 // 디버깅용 System.out.println(user_id);
 
 // guestbookdao이용, add해주기
-DaoFactory factory = new JdbcDaoFactory();
+DaoFactory factory = (DaoFactory)application.getAttribute("factory");//new JdbcDaoFactory();
+
 GuestbookDao dao = factory.getGuestbookDao();
 dao.create(guestbook);
 %>

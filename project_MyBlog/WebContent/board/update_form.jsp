@@ -54,43 +54,57 @@ Article article = dao.read(article_id);
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
               <h1>Free Board</h1>
-              <span class="subheading">Free Board :-)</span>
+              <span class="subheading">Update your Article :-)</span>
             </div>
           </div>
         </div>
       </div>
     </header>
 
-	<!-- Page Content -->
-article페이지 입니다.<br>
+	<!-- Content -->
+	<div class="container">
+	글 수정할거야<br>
+article_id = <%=request.getParameter("article_id") %>
+	<form action="update_action.jsp" method="post" name="sendMessage" id="contactForm">
+	<input type="hidden" name="article_id" value="<%=article_id %>">
 	<table border="1px black">
 		<tr>
-		  <td>글 제목</td>
-		  <td colspan="3"><%=article.getSubject() %></td>
+		  <td><label>글 제목</label></td>
+		  <td colspan="3">
+		  <input type="text" class="form-control" name="subject" value="<%=article.getSubject() %>">
+		  </td>
 		</tr>
 		<tr>
-		  <td>작성자</td><td><%=article.getWriter() %></td>
-		  <td>작성일</td><td><%=article.getRegdate() %></td>
+		  <td><label>작성자</label></td>
+		  <td>
+		  <input type="text" readonly class="form-control" value="<%=article.getWriter() %>">
+		  </td>
+		  <td><label>작성일</label></td>
+		  <td><input type="text" readonly class="form-control" value="<%=article.getRegdate() %>">
+		  </td>
 		</tr>
 		<tr>
-		  <td>아이피</td><td><%=article.getIp() %></td>
-		  <td>조회수</td><td><%=article.getHitcount() %></td>
+		  <td><label>아이피</label></td>
+		  <td>
+		  <input type="text" readonly class="form-control" value="<%=article.getIp() %>">
+		  </td>
+		  <td><label>조회수</label></td>
+		  <td>
+		  <input type="text" readonly class="form-control" value="<%=article.getHitcount() %>">
+		  </td>
 		</tr>
-		<tr>
-		  <td colspan="4"><%=article.getContent() %></td>
+		<tr height="300px">
+		  <td colspan="4">
+		  <textarea style="height: 300px;" col="50" row="40" class="form-control" name="content" ><%=article.getContent() %></textarea>
+		  </td>
 		</tr>
 	</table>
-<button>목록</button>
-<button>답글</button>
-<form action="update_form.jsp">
-<input type="hidden" name="article_id" value="<%= article.getArticle_id()%>">
-<button>수정</button>
-</form>
-
-    <!-- Footer -->
-    <footer>
-		<jsp:include page="../includes/footer.jsp"/>
-    </footer>
+	<br>
+	<div class = "form-group">
+		<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Modify">
+	</div>
+	</form>
+	</div>
 
 </body>
 </html>

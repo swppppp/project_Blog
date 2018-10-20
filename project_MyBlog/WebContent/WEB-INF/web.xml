@@ -9,4 +9,12 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+
+  <!-- jsp등록 -->
+  <servlet>
+  	<servlet-name>init</servlet-name>
+  	<jsp-file>/init.jsp</jsp-file>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
 </web-app>
+

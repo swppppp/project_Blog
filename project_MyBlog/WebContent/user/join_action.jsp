@@ -8,7 +8,7 @@
 <jsp:useBean id="user" class="kr.or.kosta.blog.user.dao.User" scope="request"/>
 <jsp:setProperty property="*" name="user"/>
 <%
-DaoFactory factory = new JdbcDaoFactory();
+DaoFactory factory = (DaoFactory)application.getAttribute("factory");
 UserDao dao = factory.getUserDao();
 dao.create(user);
 System.out.println(user);

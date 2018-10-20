@@ -18,7 +18,7 @@ for(Cookie cookie2 : cookies){
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="index2.jsp">Home</a>
+              <a class="nav-link" href="../index2.jsp">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About Me</a>

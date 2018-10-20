@@ -95,7 +95,7 @@ for(Cookie cookie:cookies){
             <br>
             <div id="success"></div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton">Join</button>
+              <button type="submit" class="btn btn-primary" id="sendMessageButton">Login</button>
             </div>
           </form>
         </div>
