@@ -15,8 +15,11 @@ public interface ArticleDao {
 	// 조회수 수정
 	public void hitCountChange(int article_id) throws Exception;
 	
-	// 답글쓰기
-	public void createReply(Article article) throws Exception;
+	// 원글에 대한 답글쓰기(level_no=1)
+	public void create(Article article, int group_no) throws Exception;
+	
+	// 답글에 대한 답글(level_no값 입력 필요)
+	public void create(Article article, int group_no, int level_no) throws Exception;
 	
 	// 게시글 수정
 	public void update(Article article) throws Exception;

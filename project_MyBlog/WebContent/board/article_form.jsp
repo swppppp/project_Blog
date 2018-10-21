@@ -8,6 +8,11 @@ for(Cookie cookie:cookies){
 		writer = cookie.getValue();
 	}
 }
+
+//답글인지 아닌지 확인을 위한 group_no값 확인(null이면 원글, null이 아니면 답글)
+String group_no =request.getParameter("group_no");
+String origin_subject = request.getParameter("origin_subject");
+System.out.println("그룹번호"+group_no);
 %>
 <!DOCTYPE html>
 <html>
@@ -60,13 +65,16 @@ for(Cookie cookie:cookies){
     </header>
 
 	<!-- Page Content -->
-게시글 작성 페이지 입니다.<br>
-<form action="article_action.jsp" method="post">
+	
+<div class="container">
+<form action="article_action.jsp" method="post" id="contactForm">
+	<%if(group_no == null || group_no.length()==0){
+	%>
 	<table border="1px black">
 		<tr>
 		  <td>글 제목</td>
 		  <td colspan="3">
-		  	<input type="text" name="subject">
+		  	<input type="text" class="form-control" name="subject">
 		  </td>
 		</tr>
 		<tr>
@@ -74,11 +82,37 @@ for(Cookie cookie:cookies){
 		  <td>비밀번호</td><td><input type="password" name="passwd"></td>
 		</tr>
 		<tr>
-		  <td colspan="4"><input type="text" name="content"></td>
+		  <td colspan="4">
+		  <!-- <input type="textarea" name="content"> -->
+		  <textarea rows="40" cols="50" class="form-control" name="content" style="height: 300px;"></textarea>
+		  </td>
 		</tr>
 	</table>
+	<%}else{ %><%--댓글일 경우 --%>
+	<input type="hidden" name="group_no" value="<%=group_no%>">
+	<table border="1px black">
+		<tr>
+		  <td>글 제목</td>
+		  <td colspan="3">
+		  	<span>re: <%=origin_subject %></span>
+		  	<input type="text" class="form-control" name="subject">
+		  </td>
+		</tr>
+		<tr>
+		  <td>작성자</td><td><input type="text" value="<%=writer %>" name="writer" readonly></td>
+		  <td>비밀번호</td><td><input type="password" name="passwd"></td>
+		</tr>
+		<tr>
+		  <td colspan="4">
+		  <!-- <input type="textarea" name="content"> -->
+		  <textarea rows="40" cols="50" class="form-control" name="content" style="height: 300px;"></textarea>
+		  </td>
+		</tr>
+	</table>
+	<%} %>
 <input type="submit" value="등록하기">
 </form>
+</div>
 
     <!-- Footer -->
     <footer>

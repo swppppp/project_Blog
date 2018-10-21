@@ -29,7 +29,6 @@ public class JdbcArticleDao implements ArticleDao {
 
 	@Override
 	public void create(Article article) throws Exception {
-
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO article \r\n" + 
@@ -70,8 +69,57 @@ public class JdbcArticleDao implements ArticleDao {
 		}
 	}
 
-	@Override
-	public void createReply(Article article) throws Exception {
+	@Override // create메소드 오버로딩.. 원글에 대한 답글
+	public void create(Article article, int group_no) throws Exception {
+		// 원글에 대한 첫번째 답글
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO article \r\n" + 
+				"            (article_id, \r\n" + 
+				"             board_id, \r\n" + 
+				"             writer, \r\n" + 
+				"             subject, \r\n" + 
+				"             content, \r\n" + 
+				"             ip, \r\n" + 
+				"             passwd, \r\n" + 
+				"             group_no, \r\n" + 
+				"             level_no, \r\n" + 
+				"             order_no) \r\n" + 
+				"VALUES      (article_id_seq.NEXTVAL, \r\n" + 
+				"             1, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             ?, \r\n" + 
+				"             1, \r\n" + 
+				"             (SELECT MAX(order_no)+1 \r\n" +
+							  "FROM   article \r\n" +
+							  "WHERE  board_id=1 \r\n" +
+							  "	 AND  group_no = ?))";
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, article.getWriter());
+			pstmt.setString(2, article.getSubject());
+			pstmt.setString(3, article.getContent());
+			pstmt.setString(4, article.getIp());
+			pstmt.setString(5, article.getPasswd());
+			pstmt.setInt(6, group_no);
+			pstmt.setInt(7, group_no);
+			pstmt.executeUpdate();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			}catch (Exception e) {}
+		}
+	}
+	
+	@Override //답글에대한답글
+	public void create(Article article, int group_no, int level_no) throws Exception {
+
 		
 	}
 	
@@ -469,6 +517,8 @@ public class JdbcArticleDao implements ArticleDao {
 	public int countBySearch(Params params) throws Exception {
 		return countBySearch(params.getSearchType(), params.getSearchValue());
 	}
+
+	
 
 
 

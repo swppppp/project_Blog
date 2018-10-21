@@ -88,16 +88,21 @@ article페이지 입니다.<br>
 		  <td colspan="4"><%=article.getContent() %></td>
 		</tr>
 	</table>
-<input type="submit" value="List" onclick="location.href='board.jsp'"><!-- 목록 -->
-<input type="submit" value="Reply" onclick="location.href='board.jsp'"><!-- 답글 -->
+<input type="submit" value="List" onclick="location.href='board.jsp'"><%-- 목록 --%>
+
+<form action="article_form.jsp" method="post" style="display: inline;">
+	<input type="submit" value="Reply"><%-- 답글 --%>
+	<input type="hidden" name="group_no" value="<%=article.getGroup_no() %>">
+	<input type="hidden" name="origin_subject" value="<%=article.getSubject() %>">
+</form>
 <%
 if(article.getWriter().equals(loginId)){
 %>
-<form action="confirm_pw.jsp" method="post">
-<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
-<input type="hidden" name="user_id" value="<%=loginId %>">
-<input type="submit" value="Modify" name="whatAction"><!-- 수정 -->
-<input type="submit" value="Delete" name="whatAction"><!-- 삭제 -->
+<form action="confirm_pw.jsp" method="post" style="display: inline;">
+	<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
+	<input type="hidden" name="user_id" value="<%=loginId %>">
+	<input type="submit" value="Modify" name="whatAction"><!-- 수정 -->
+	<input type="submit" value="Delete" name="whatAction"><!-- 삭제 -->
 </form>
 <%
 }else{
