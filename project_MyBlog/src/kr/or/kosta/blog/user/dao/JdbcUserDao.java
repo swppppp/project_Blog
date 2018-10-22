@@ -198,52 +198,79 @@ public class JdbcUserDao implements UserDao {
 	}
 	
 	
+//	@Override
+//	public List<Map<String, String>> employeeList() throws Exception {
+//		List<Map<String, String>> list = null;
+//		
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		
+//		String sql = "SELECT e.employee_id     eid, \r\n" + 
+//				     "       e.last_name       ename, \r\n" + 
+//				     "       e.salary          salary, \r\n" + 
+//				     "       d.department_name dname, \r\n" + 
+//				     "       l.city            city, \r\n" + 
+//				     "       e2.last_name      mname \r\n" + 
+//				     "FROM   employees e \r\n" + 
+//				     "       left outer join departments d \r\n" + 
+//				     "                    ON e.department_id = d.department_id \r\n" + 
+//				     "       left outer join locations l \r\n" + 
+//				     "                    ON d.location_id = l.location_id \r\n" + 
+//				     "       left outer join employees e2 \r\n" + 
+//				     "                    ON e.manager_id = e2.employee_id \r\n" + 
+//				     "ORDER  BY eid ASC";
+//		try {
+//			con = dataSource.getConnection();
+//			pstmt = con.prepareStatement(sql);
+//			rs = pstmt.executeQuery();
+//			list = new ArrayList<Map<String, String>>();
+//			ResultSetMetaData rsd = rs.getMetaData();
+//			int columCount = rsd.getColumnCount();
+//			while(rs.next()) {
+//				Map<String, String> row = new HashMap<String, String>();
+//				for(int i=1; i<=columCount; i++) {
+//					String columName = rsd.getColumnLabel(i);
+//					String columValue = rs.getString(i);
+//					row.put(columName, columValue);
+//				}
+//				list.add(row);				
+//			}
+//		} finally {
+//			try {
+//				if(rs != null)    rs.close();
+//				if(pstmt != null) pstmt.close();
+//				if(con != null)   con.close();
+//			}catch (Exception e) {}
+//		}
+//		return list;
+//	}
+
 	@Override
-	public List<Map<String, String>> employeeList() throws Exception {
-		List<Map<String, String>> list = null;
-		
+	public boolean checkId(String id) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sql = "SELECT id FROM users";
 		
-		String sql = "SELECT e.employee_id     eid, \r\n" + 
-				     "       e.last_name       ename, \r\n" + 
-				     "       e.salary          salary, \r\n" + 
-				     "       d.department_name dname, \r\n" + 
-				     "       l.city            city, \r\n" + 
-				     "       e2.last_name      mname \r\n" + 
-				     "FROM   employees e \r\n" + 
-				     "       left outer join departments d \r\n" + 
-				     "                    ON e.department_id = d.department_id \r\n" + 
-				     "       left outer join locations l \r\n" + 
-				     "                    ON d.location_id = l.location_id \r\n" + 
-				     "       left outer join employees e2 \r\n" + 
-				     "                    ON e.manager_id = e2.employee_id \r\n" + 
-				     "ORDER  BY eid ASC";
 		try {
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			list = new ArrayList<Map<String, String>>();
-			ResultSetMetaData rsd = rs.getMetaData();
-			int columCount = rsd.getColumnCount();
-			while(rs.next()) {
-				Map<String, String> row = new HashMap<String, String>();
-				for(int i=1; i<=columCount; i++) {
-					String columName = rsd.getColumnLabel(i);
-					String columValue = rs.getString(i);
-					row.put(columName, columValue);
+			
+			while (rs.next()) {
+				if(rs.getString("id").equals(id)) {
+					return true;
 				}
-				list.add(row);				
 			}
-		} finally {
+		}finally {
 			try {
 				if(rs != null)    rs.close();
 				if(pstmt != null) pstmt.close();
 				if(con != null)   con.close();
-			}catch (Exception e) {}
+			} catch (Exception e) {}
 		}
-		return list;
+		return false;
 	}
 	
 }

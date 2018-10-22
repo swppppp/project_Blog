@@ -22,6 +22,9 @@ public interface UserDao {
 	
 	public User certify(String id, String passwd) throws Exception;
 	
-	public List<Map<String, String>> employeeList() throws Exception;
+	//public List<Map<String, String>> employeeList() throws Exception;
+	
+	//아이디중복체크를 위한 메소드
+	public boolean checkId(String id) throws Exception;
 	
 }

@@ -10,7 +10,6 @@ String whatAction = request.getParameter("whatAction");
 String user_id = request.getParameter("user_id");
 // 비밀번호일치여부에 따른 확인값
 String check=request.getParameter("checkResult");
-System.out.println("check값: "+check);
 
 UserDao dao = (UserDao)application.getAttribute("userDao");
 User user = dao.read(user_id);
