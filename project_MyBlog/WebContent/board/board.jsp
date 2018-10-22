@@ -56,6 +56,17 @@ pageBuilder.build();
 
     <title>Fresiwon - Free Board</title>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Fresiwon Blog - Free Board</title>
+
+	<%--강사님 스타일..가져옴 --%>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/Resources/css/pagination.css">
+   
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -68,9 +79,6 @@ pageBuilder.build();
     <link href="../Resources/css/clean-blog.min.css" rel="stylesheet">
     <link href="../Resources/css/custom.css" rel="stylesheet">
 
-	<%--강사님 스타일..가져옴 --%>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/Resources/css/pagination.css">
 	
   </head>
 <body>
@@ -213,10 +221,18 @@ pageBuilder.build();
 <button onclick="location.href='article_form.jsp'">글쓰기</button>
   </div>
 </div>
+
     <!-- Footer -->
     <footer>
 		<jsp:include page="../includes/footer.jsp"/>
     </footer>
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="../Resources/vendor/jquery/jquery.min.js"></script>
+    <script src="../Resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- Custom scripts for this template -->
+    <script src="../Resources/js/clean-blog.min.js"></script> 
 	
 
 

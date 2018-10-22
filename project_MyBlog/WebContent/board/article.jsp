@@ -70,28 +70,32 @@ for(Cookie cookie : cookies){
     </header>
 
 	<!-- Page Content -->
-article페이지 입니다.<br>
-	<table border="1px black">
+	<div class="container"> 
+	<table style="width:500px;">
 		<tr>
-		  <td>글 제목</td>
+		  <td class="form-control">글 제목</td>
 		  <td colspan="3"><%=article.getSubject() %></td>
 		</tr>
 		<tr>
-		  <td>작성자</td><td><%=article.getWriter() %></td>
-		  <td>작성일</td><td><%=article.getRegdate() %></td>
+		  <td class="form-control">작성자</td><td><%=article.getWriter() %></td>
+		  <td class="form-control">작성일</td><td><%=article.getRegdate() %></td>
 		</tr>
 		<tr>
-		  <td>아이피</td><td><%=article.getIp() %></td>
-		  <td>조회수</td><td><%=article.getHitcount() %></td>
+		  <td class="form-control">아이피</td><td><%=article.getIp() %></td>
+		  <td class="form-control">조회수</td><td><%=article.getHitcount() %></td>
 		</tr>
 		<tr>
-		  <td colspan="4"><%=article.getContent() %></td>
+		  <td colspan="4">
+		  <textarea readonly style="height: 300px;" col="50" row="40" class="form-control">
+		  <%=article.getContent().trim() %></textarea>
+		  </td>
 		</tr>
 	</table>
-<input type="submit" value="List" onclick="location.href='board.jsp'"><%-- 목록 --%>
+	<div class="form-group">
+<input type="submit" value="List" class="btn btn-primary" id="sendMessageButton" onclick="location.href='board.jsp'"><%-- 목록 --%>
 
 <form action="article_form.jsp" method="post" style="display: inline;">
-	<input type="submit" value="Reply"><%-- 답글 --%>
+	<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Reply"><%-- 답글 --%>
 	<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
 	<input type="hidden" name="group_no" value="<%=article.getGroup_no() %>">
 	<input type="hidden" name="origin_subject" value="<%=article.getSubject() %>">
@@ -103,24 +107,19 @@ if(article.getWriter().equals(loginId)){
 <form action="confirm_pw.jsp" method="post" style="display: inline;">
 	<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
 	<input type="hidden" name="user_id" value="<%=loginId %>">
-	<input type="submit" value="Modify" name="whatAction"><!-- 수정 -->
-	<input type="submit" value="Delete" name="whatAction"><!-- 삭제 -->
+	<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Modify" name="whatAction"><!-- 수정 -->
+	<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Delete" name="whatAction"><!-- 삭제 -->
 </form>
 <%
 }else{
 %>
-<input type="submit" value="Modify" disabled><!-- 수정 -->
-<input type="submit" value="Delete" disabled><!-- 삭제 -->
+<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Modify" disabled><!-- 수정 -->
+<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Delete" disabled><!-- 삭제 -->
 <%
 }
 %>
-<!-- 
-<form action="update_form.jsp">
-<input type="hidden" name="article_id" value="<%= article.getArticle_id()%>">
-<button>수정</button>
-onclick="location.href='update_form.jsp?article_id=<%=article.getArticle_id() %>'"
-</form>
- -->
+	</div>
+	</div>
 
     <!-- Footer -->
     <footer>

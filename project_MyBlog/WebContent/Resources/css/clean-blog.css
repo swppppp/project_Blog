@@ -4,6 +4,19 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-clean-blog/blob/master/LICENSE)
  */
 
+/*
+custom
+*/
+#dupCheck {
+	display: inline;
+    float: right;
+    width: 100px;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    padding: 5px 5px 5px 5px;
+}
+
 body {
   font-size: 20px;
   color: #212529;
