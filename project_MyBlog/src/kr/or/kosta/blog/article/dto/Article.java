@@ -14,6 +14,7 @@ package kr.or.kosta.blog.article.dto;
   group_no      NUMBER(7)        NOT NULL,                   -- 계층형 게시판 구조를 위한 게시글 그룹번호
   level_no      NUMBER(2)        NOT NULL,                   -- 계층형 게시판 구조를 위한 그룹내 게시글 레벨
   order_no      NUMBER(3)        NOT NULL                    -- 계층형 게시판 구조를 위한 그룹내 게시글 순서
+  isdel			VARCHAR2(5)									 -- 삭제여부에 대한 값
 );
  * @author siwon
  */
@@ -32,6 +33,7 @@ public class Article {
 	private int group_no; //답글과 그룹짓기위한 식별값
 	private int level_no; //답글 계층
 	private int order_no; //원글부터 달린 답글의 순서
+	private String isdel; //삭제여부 값
 	
 	public Article() {
 		super();
@@ -160,6 +162,14 @@ public class Article {
 
 	public void setOrder_no(int order_no) {
 		this.order_no = order_no;
+	}
+	
+	public String getIsdel() {
+		return isdel;
+	}
+	
+	public void setIsdel(String isdel) {
+		this.isdel = isdel;
 	}
 
 	@Override

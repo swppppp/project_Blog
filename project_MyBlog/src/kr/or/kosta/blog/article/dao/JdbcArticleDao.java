@@ -342,6 +342,26 @@ public class JdbcArticleDao implements ArticleDao {
 		article.setRegdate(rs.getString("regdate"));
 		article.setSubject(rs.getString("subject"));
 		article.setWriter(rs.getString("writer"));
+		//article.setIsdel(rs.getString("isdel"));
+		return article;
+	}
+	
+	private Article createArticleIsdel(ResultSet rs) throws SQLException {
+		Article article = new Article();
+		article.setArticle_id(rs.getInt("article_id"));
+		article.setAttach_file("");
+		article.setBoard_id(rs.getInt("board_id"));
+		article.setContent(rs.getString("content"));
+		article.setGroup_no(rs.getInt("group_no"));
+		article.setHitcount(rs.getInt("hitcount"));
+		article.setIp(rs.getString("ip"));
+		article.setLevel_no(rs.getInt("level_no"));
+		article.setOrder_no(rs.getInt("order_no"));
+		article.setPasswd(rs.getString("passwd"));
+		article.setRegdate(rs.getString("regdate"));
+		article.setSubject(rs.getString("subject"));
+		article.setWriter(rs.getString("writer"));
+		article.setIsdel(rs.getString("isdel"));
 		return article;
 	}
 
@@ -500,7 +520,8 @@ public class JdbcArticleDao implements ArticleDao {
 	            + "order_no,\r\n"
 	            + "ATTACH_FILE,\r\n" 
 	            + "regdate,\r\n" 
-	            + "hitcount \r\n"
+	            + "hitcount, \r\n"
+	            + "isdel \r\n"
 	            + "FROM   (SELECT Ceil(ROWNUM / ?)                      request_page, \r\n"
 	            + "               subject, \r\n" 
 	            + "               writer, \r\n"
@@ -514,6 +535,7 @@ public class JdbcArticleDao implements ArticleDao {
 	            + "group_no," 
 	            + "level_no," 
 	            + "order_no," 
+	            + "isdel,"
 	            + "ATTACH_FILE"
 	            + "        FROM   (SELECT subject, \r\n" 
 	            + "                       writer, \r\n"
@@ -527,6 +549,7 @@ public class JdbcArticleDao implements ArticleDao {
 	            + "group_no," 
 	            + "level_no," 
 	            + "order_no," 
+	            + "isdel,"
 	            + "ATTACH_FILE"
 	            + "                FROM   article \r\n" 
 	            + "                WHERE  board_id = 1 ";
@@ -568,7 +591,7 @@ public class JdbcArticleDao implements ArticleDao {
 			rs = pstmt.executeQuery();
 			list = new ArrayList<Article>();
 			while (rs.next()) {
-				Article article = createArticle(rs);
+				Article article = createArticleIsdel(rs);
 				list.add(article);
 			}
 		}finally {
@@ -637,6 +660,28 @@ public class JdbcArticleDao implements ArticleDao {
 	@Override
 	public int countBySearch(Params params) throws Exception {
 		return countBySearch(params.getSearchType(), params.getSearchValue());
+	}
+
+	@Override
+	public void delAlter(int article_id) throws Exception {
+		// 삭제요청을 받은 글임을 확인하기 위한 값을 변경해주는 메소드
+		Connection con =  null;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE article \r\n" + 
+					 "SET    isdel = 'true' \r\n" + 
+					 "WHERE  article_id = ?";
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, article_id);
+			pstmt.executeUpdate();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null)   con.close();
+			} catch (Exception e) {}
+		}
+		
 	}
 
 }

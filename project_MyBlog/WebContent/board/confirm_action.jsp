@@ -16,8 +16,11 @@ if(passwd.equals(pw)){
 	if(whatAction.equals("Modify")){
 %> 		<jsp:forward page="../board/update_form.jsp"/>
 <%  }else if(whatAction.equals("Delete")){
-	
-	}
+%>
+		<jsp:forward page="/board/delete_action.jsp">
+			<jsp:param value="<%=article_id %>" name="article_id"/>
+		</jsp:forward>
+<%	}
 }else{
 	// 되돌아가서 틀렸음을 알려주기
 %>	<jsp:forward page="../board/confirm_pw.jsp">

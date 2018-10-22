@@ -10,11 +10,20 @@
 ArticleDao dao = (ArticleDao)application.getAttribute("articleDao");
 //List<Article> list = dao.listAll();
 
+//로그인 여부 확인
+Cookie cookie = null;
+Cookie[] cookies = request.getCookies();
+for(Cookie cookie2 : cookies){
+	if(cookie2.getName().equals("loginId")){
+		cookie = cookie2;
+	}
+}
+
 // 페이징처리
 // 페이지당 보여지는 게시글목록 수
-int listSize = 3;
+int listSize = 5;
 // 한 화면의 페이지 수
-int pageSize = 10;
+int pageSize = 5;
 
 // 선택한 페이지 수신.. 선택페이지 없으면 1로
 String requestPage = request.getParameter("page");
@@ -33,6 +42,9 @@ if(searchType == null || searchType.equals("")){
 // 요청파라미터 포장
 Params params = new Params(Integer.parseInt(requestPage), listSize, pageSize, searchType, searchValue);
 List<Article> list = dao.listByPage(params);
+for(Article art: list){
+	System.out.println(art.getIsdel());
+}
 
 // 페이지 처리에 필요한 검색 갯수 DB조회
 int rowCount = dao.countBySearch(params);
@@ -134,6 +146,8 @@ pageBuilder.build();
           <%
           for(int i=0; i<list.size(); i++){
         	  Article article = list.get(i);
+        	  //System.out.println("지워진글인가요: "+article.getIsdel());
+        	  if(article.getIsdel() == null){
           %>
           <form action="article.jsp">
           <input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
@@ -159,6 +173,12 @@ pageBuilder.build();
                 <td><%=article.getHitcount() %></td>
                 <td></td>
               </tr>
+              <%}else{ %>
+              <tr class="<%= (i%2)== 0 ? "w3-white" : "" %>">
+              <td><%=(rowCount - listSize * (params.getPage()-1) ) - i %></td>
+              <td colspan="5" style="text-align: center;">작성자에 의해 삭제된 게시물 입니다.</td>
+              </tr>
+              <%} %>
           </form>
 		  <%
           }
@@ -169,56 +189,59 @@ pageBuilder.build();
 
 <%--페이징처리 --%>
 <div>
-    <div class="pagination" style="text-align: center;">
-    <%
-    // 처음으로
-    if(pageBuilder.isShowFirst()){
-    %>
-      <a href="<%=pageBuilder.getQueryString(1)%>">처음으로</a>
-    <%
-    }
-    %>
-    <%
-    // 이전으로
-    if(pageBuilder.isShowPrevious()){
-    %>
-      <a href="<%=pageBuilder.getQueryString(pageBuilder.getPreviousStartPage()) %>">&laquo;</a>
-    <%
-    }
-    %>
-    <%
-    for(int i = pageBuilder.getStartPage(); i<=pageBuilder.getEndPage(); i++){
-    	if(i == params.getPage()){
-    %>
-      <a class="active"><%=i %></a>
-    <%
-    	}else{
-    %>
-      <a href="<%=pageBuilder.getQueryString(i) %>"><%=i %></a>
-    <%
-    	}
-    }
-    %>
-    <%
-    // 다음으로
-    if(pageBuilder.isShowNext()){
-    %>
-      <a href="<%=pageBuilder.getQueryString(pageBuilder.getNextStartPage()) %>">&laquo;</a>
-    <%
-    }
-    %>
-    <%
-    // 마지막으로
-    if(pageBuilder.isShowLast()){
-    %>
-      <a href="<%=pageBuilder.getQueryString(pageBuilder.getPageCount())%>">끝으로</a>
-    <%
-    }
-    %>
+        <div class="pagination">
+      <%
+      if(pageBuilder.isShowFirst()){
+      %>
+        <a href="<%=pageBuilder.getQueryString(1)%>">처음으로</a>      
+      <%        
+      }
+      %>
+      
+      <%
+      if(pageBuilder.isShowPrevious()){
+      %>
+        <a href="<%=pageBuilder.getQueryString(pageBuilder.getPreviousStartPage())%>">&laquo;</a>      
+      <%        
+      }
+      %>
+      
+      <%
+      for(int i=pageBuilder.getStartPage(); i<=pageBuilder.getEndPage(); i++){
+        if(i == params.getPage()){
+      %>
+          <a class="active"><%=i %></a>
+      <%          
+        }else{
+      %>
+           <a href="<%=pageBuilder.getQueryString(i)%>"><%=i %></a>
+      <%          
+        }
+      }
+      %>
+      
+      <%
+      if(pageBuilder.isShowNext()){
+      %>
+        <a href="<%=pageBuilder.getQueryString(pageBuilder.getNextStartPage())%>">&raquo;</a>      
+      <%        
+      }
+      %>
+      <%
+      if(pageBuilder.isShowLast()){
+      %>
+        <a href="<%=pageBuilder.getQueryString(pageBuilder.getPageCount())%>">끝으로</a>      
+      <%        
+      }
+      %>
     </div>
-  <div id="btnDiv" style="float: right;">
-<button onclick="location.href='../index2.jsp'">홈으로</button>
-<button onclick="location.href='article_form.jsp'">글쓰기</button>
+  <div id="btnDiv" style="float: right; padding-right:3%;">
+<button class="btn btn-primary" onclick="location.href='/index2.jsp'">HOME</button>
+<%if(cookie == null){ %>
+<button disabled class="btn btn-primary" data-toggle="tooltip" title="로그인 후 이용가능합니다.">WRITE</button>
+<%}else{ %>
+<button disabled class="btn btn-primary" onclick="location.href='article_form.jsp'">WRITE</button>
+<%} %>
   </div>
 </div>
 

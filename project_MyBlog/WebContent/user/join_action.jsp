@@ -11,8 +11,5 @@
 DaoFactory factory = (DaoFactory)application.getAttribute("factory");
 UserDao dao = factory.getUserDao();
 dao.create(user);
-System.out.println(user);
-//디버깅
-//System.out.println("디버깅...\n"+user+"가입성공");
 %>
 <jsp:forward page="/user/join_result.jsp"/>

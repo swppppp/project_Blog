@@ -7,7 +7,6 @@
 //reqest.setCharacterEncoding("utf-8");
 String id = request.getParameter("id");
 String passwd = request.getParameter("passwd");
-System.out.println("id기억 체크: "+request.getParameter("rememberId"));
 
 if(id == null || passwd == null){
 	return;
@@ -28,12 +27,10 @@ if(user!=null){
 		rcookie.setMaxAge(60*60*24*365); //쿠키값 1년유지
 		response.addCookie(rcookie);
 	}else if(request.getParameter("rememberId") == null){
-		System.out.print("null인데 들어오니?");
 		// 체크했다가 해제하면 기존에있던 rcookie 삭제
 		Cookie[] cookies = request.getCookies();
 		for(Cookie cookie2:cookies){
 			if(cookie2.getName().equals("rememberId")){
-				System.out.print("쿠키지우러들어옴");
 				cookie2.setMaxAge(0);
 				cookie2.setPath("/");
 				response.addCookie(cookie2);

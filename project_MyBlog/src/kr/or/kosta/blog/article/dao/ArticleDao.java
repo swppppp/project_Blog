@@ -24,8 +24,11 @@ public interface ArticleDao {
 	// 게시글 수정
 	public void update(Article article) throws Exception;
 	
-	// 게시글삭제
+	// 게시글삭제..완전삭제
 	public void delete(int article_id) throws Exception;
+	
+	// 작성자가 삭제를 한 글임을 알려주기위한 삭제
+	public void delAlter(int article_id) throws Exception;
 	
 	// 게시글목록
 	public List<Article> listAll() throws Exception;
