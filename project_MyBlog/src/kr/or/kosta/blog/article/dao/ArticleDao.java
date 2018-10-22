@@ -19,7 +19,7 @@ public interface ArticleDao {
 	public void create(Article article, int group_no) throws Exception;
 	
 	// 답글에 대한 답글(level_no값 입력 필요)
-	public void create(Article article, int group_no, int level_no) throws Exception;
+	public void create(Article article, int group_no, int level_no, int rId) throws Exception;
 	
 	// 게시글 수정
 	public void update(Article article) throws Exception;

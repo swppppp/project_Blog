@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
 encoding//WebContent/index2.jsp=UTF-8
+encoding//src/kr/or/kosta/blog/article/dao/JdbcArticleDao.java=UTF-8
 encoding//src/kr/or/kosta/blog/user/dao/JdbcUserDao.java=UTF-8
 encoding//src/kr/or/kosta/blog/user/dao/UserDaoTest.java=UTF-8

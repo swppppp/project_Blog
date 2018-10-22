@@ -1,5 +1,7 @@
+<%@page import="kr.or.kosta.blog.article.dto.Article"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%
+request.setCharacterEncoding("utf-8");
 //작성자 아이디값 확인
 String writer = "";
 Cookie[] cookies = request.getCookies();
@@ -10,9 +12,13 @@ for(Cookie cookie:cookies){
 }
 
 //답글인지 아닌지 확인을 위한 group_no값 확인(null이면 원글, null이 아니면 답글)
-String group_no =request.getParameter("group_no");
+String group_no = request.getParameter("group_no");
+//댓글에 대한 댓글확인을 위한 level_no값, 원글Id
+String level_no = request.getParameter("level_no");
+String rId = request.getParameter("article_id"); // 대댓글을 위한 부모 id값
+// 답글이면 제목에 re: (원글제목)달기위해
 String origin_subject = request.getParameter("origin_subject");
-System.out.println("그룹번호"+group_no);
+System.out.println("가져온 값들: "+group_no +", "+level_no+", "+rId);
 %>
 <!DOCTYPE html>
 <html>
@@ -88,13 +94,22 @@ System.out.println("그룹번호"+group_no);
 		  </td>
 		</tr>
 	</table>
-	<%}else{ %><%--댓글일 경우 --%>
+	<%}else{ %><%--댓글&&대댓일 경우 --%>
 	<input type="hidden" name="group_no" value="<%=group_no%>">
+	<input type="hidden" name="level_no" value="<%=level_no %>">
+	<input type="hidden" name="rId" value="<%=rId %>">
 	<table border="1px black">
 		<tr>
 		  <td>글 제목</td>
 		  <td colspan="3">
-		  	<span>re: <%=origin_subject %></span>
+		  <%
+		  int n= Integer.parseInt(level_no);
+		  String re = "";
+		  for(int i=0; i<n; i++){
+			  re+="re:";
+		  }re+=" ";
+		  %>
+		  	<span><%=re+origin_subject %></span>
 		  	<input type="text" class="form-control" name="subject">
 		  </td>
 		</tr>

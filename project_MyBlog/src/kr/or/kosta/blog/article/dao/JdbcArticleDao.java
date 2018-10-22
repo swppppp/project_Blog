@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 import kr.or.kosta.blog.article.dto.Article;
 import kr.or.kosta.blog.common.Params;
 /**
- * ArticleDao¸¦ jdbc·Î ¿¬°á, ±¸Çö
+ * ArticleDaoë¥¼ jdbcë¡œ ì—°ê²°, êµ¬í˜„
  * @author siwon
  */
 public class JdbcArticleDao implements ArticleDao {
@@ -27,7 +27,7 @@ public class JdbcArticleDao implements ArticleDao {
 		this.dataSource = dataSource;
 	}
 
-	@Override
+	@Override //ì›ê¸€ì‘ì„±
 	public void create(Article article) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -69,9 +69,9 @@ public class JdbcArticleDao implements ArticleDao {
 		}
 	}
 
-	@Override // create¸Ş¼Òµå ¿À¹ö·Îµù.. ¿ø±Û¿¡ ´ëÇÑ ´ä±Û
+	@Override // createë©”ì†Œë“œ ì˜¤ë²„ë¡œë”©.. ì›ê¸€ì— ëŒ€í•œ ë‹µê¸€
 	public void create(Article article, int group_no) throws Exception {
-		// ¿ø±Û¿¡ ´ëÇÑ Ã¹¹øÂ° ´ä±Û
+		// ì›ê¸€ì— ëŒ€í•œ ì²«ë²ˆì§¸ ë‹µê¸€
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO article \r\n" + 
@@ -117,9 +117,66 @@ public class JdbcArticleDao implements ArticleDao {
 		}
 	}
 	
-	@Override //´ä±Û¿¡´ëÇÑ´ä±Û
-	public void create(Article article, int group_no, int level_no) throws Exception {
-
+	@Override //ë‹µê¸€ì—ëŒ€í•œë‹µê¸€(level_no>1)
+	public void create(Article article, int group_no, int level_no, int rId) throws Exception {
+		//ë“¤ì–´ê°ˆìë¦¬ ì´í›„ì˜ order_noì„ 1ì”© ì¦ê°€
+		Connection con =  null;
+		PreparedStatement pstmt = null;
+		String Usql = "UPDATE article \r\n" + 
+					  "SET    order_no = order_no + 1 \r\n" + 
+					  "WHERE  board_id = 1 \r\n" + 
+					  "AND	 group_no = ? \r\n" + 
+					  "AND	 order_no > (SELECT order_no \r\n" +
+					  "					 FROM 	article \r\n" +
+					  "					 WHERE  article_id = ? )";
+		// ë‹µê¸€ì—ëŒ€í•œ ë‹µê¸€ì„ ìƒì„±
+		String Isql = "INSERT INTO article \r\n" + 
+					  "            (article_id, \r\n" + 
+					  "             board_id, \r\n" + 
+					  "             writer, \r\n" + 
+					  "             subject, \r\n" + 
+					  "             content, \r\n" + 
+					  "             ip, \r\n" + 
+					  "             passwd, \r\n" + 
+					  "             group_no, \r\n" + 
+					  "             level_no, \r\n" + 
+					  "             order_no) \r\n" + 
+					  "VALUES      (article_id_seq.NEXTVAL, \r\n" + 
+					  "             1, \r\n" + 
+					  "             ?, \r\n" + 
+					  "             ?, \r\n" + 
+					  "             ?, \r\n" + 
+					  "             ?, \r\n" + 
+					  "             ?, \r\n" + 
+					  "             ?, \r\n" + 
+					  "             ?, \r\n" + 
+					  "             (SELECT order_no + 1 \r\n" + 
+					  "              FROM   article \r\n" + 
+					  "              WHERE  article_id = ?))";
+		try {
+			// orderìˆ˜ì •
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(Usql);
+			pstmt.setInt(1, group_no); //group_no
+			pstmt.setInt(2, rId); //rId
+			pstmt.executeUpdate();
+			// ë‹µë‹µê¸€ ìƒì„±
+			pstmt = con.prepareStatement(Isql);
+			pstmt.setString(1, article.getWriter());
+			pstmt.setString(2, article.getSubject());
+			pstmt.setString(3, article.getContent());
+			pstmt.setString(4, article.getIp());
+			pstmt.setString(5, article.getPasswd());
+			pstmt.setInt(6, group_no);
+			pstmt.setInt(7, level_no);
+			pstmt.setInt(8, rId);
+			pstmt.executeUpdate();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null)   con.close();
+			} catch (Exception e) {}
+		}
 		
 	}
 	
@@ -187,7 +244,7 @@ public class JdbcArticleDao implements ArticleDao {
 	}
 	
 	@Override
-	// ±Û ¼öÁ¤.. Á¦¸ñ°ú ³»¿ë¸¸ º¯°æ°¡´É
+	// ê¸€ ìˆ˜ì •.. ì œëª©ê³¼ ë‚´ìš©ë§Œ ë³€ê²½ê°€ëŠ¥
 	public void update(Article article) throws Exception {
 		Connection con =  null;
 		PreparedStatement pstmt = null;
@@ -289,7 +346,7 @@ public class JdbcArticleDao implements ArticleDao {
 	}
 
 	@Override
-	// »ç¿ëÀÚ°¡ ¼±ÅÃÇÑ ÆäÀÌÁö ¸ñ·Ï¹İÈ¯
+	// ì‚¬ìš©ìê°€ ì„ íƒí•œ í˜ì´ì§€ ëª©ë¡ë°˜í™˜
 	public List<Article> listByPage(int page) throws Exception {
 		List<Article> list = null;
 		
@@ -372,75 +429,139 @@ public class JdbcArticleDao implements ArticleDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT article_id, \r\n" + 
-				"       board_id, \r\n" + 
-				"       writer, \r\n" + 
-				"       subject, \r\n" + 
-				"       content, \r\n" + 
-				"       regdate, \r\n" + 
-				"       hitcount, \r\n" + 
-				"       ip, \r\n" + 
-				"       passwd, \r\n" + 
-				"       group_no, \r\n" + 
-				"       level_no, \r\n" + 
-				"       order_no \r\n" + 
-				"FROM   (SELECT Ceil(ROWNUM/?) request_page, \r\n" + 
-				"                     article_id, \r\n" + 
-				"                     board_id, \r\n" + 
-				"                     writer, \r\n" + 
-				"                     subject, \r\n" + 
-				"                     content, \r\n" + 
-				"                     regdate, \r\n" + 
-				"                     hitcount, \r\n" + 
-				"                     ip, \r\n" + 
-				"                     passwd, \r\n" + 
-				"                     group_no, \r\n" + 
-				"                     level_no, \r\n" + 
-				"                     order_no \r\n" + 
-				"              FROM   (SELECT article_id, \r\n" + 
-				"                                   board_id, \r\n" + 
-				"                                   writer, \r\n" + 
-				"                                   subject, \r\n" + 
-				"                                   content, \r\n" + 
-				"                                   to_char(regdate, 'yyyy-mm-dd hh24:mi') regdate, \r\n" + 
-				"                                   hitcount, \r\n" + 
-				"                                   ip, \r\n" + 
-				"                                   passwd, \r\n" + 
-				"                                   group_no, \r\n" + 
-				"                                   level_no, \r\n" + 
-				"                                   order_no\r\n" + 
-				"                      FROM article";
-		// °Ë»öÀ¯Çü¿¡µû¸¥ whereÀı Ãß°¡
-		if(searchType != null) {
-			// °Ë»öÀ¯Çüº° whereÀı Ãß°¡
-			if(searchType != null) {
-				switch (searchType) {
-					case "subject":
-						sql += "WHERE subject = ? \r\n";
-						break;
-					case "content":
-						sql += "WHERE content LIKE ? \r\n";
-						searchValue = "%" + searchValue + "%";
-						break;
-					case "writer":
-						sql += "WHERE writer = ? \r\n";
-						break;
-				}
-			}
-		}
-		sql += ")) \r\n" + //ORDER BY regdate DESC ¾îµğµé¾î°¡¾ßµÅ,,¤Ğ¤Ğ¤Ğ
-			   "WHERE request_page=?";
+//		String sql = "SELECT article_id, \r\n" + 
+//				"       	 board_id, \r\n" + 
+//				"       	 writer, \r\n" + 
+//				"       	 subject, \r\n" + 
+//				"       	 content, \r\n" + 
+//				"       	 regdate, \r\n" + 
+//				"       	 hitcount, \r\n" + 
+//				"       	 ip, \r\n" + 
+//				"       	 passwd, \r\n" + 
+//				"       	 group_no, \r\n" + 
+//				"       	 level_no, \r\n" + 
+//				"       	 order_no \r\n" + 
+//				"FROM   (SELECT Ceil(ROWNUM/?) request_page, \r\n" + 
+//				"                     article_id, \r\n" + 
+//				"                     board_id, \r\n" + 
+//				"                     writer, \r\n" + 
+//				"                     subject, \r\n" + 
+//				"                     content, \r\n" + 
+//				"                     TO_CHAR(regdate, 'yyyy-mm-dd hh24:mi') regdate, \r\n" + 
+//				"                     hitcount, \r\n" + 
+//				"                     ip, \r\n" + 
+//				"                     passwd, \r\n" + 
+//				"                     group_no, \r\n" + 
+//				"                     level_no, \r\n" + 
+//				"                     order_no \r\n" + 
+//				"              FROM   (SELECT article_id, \r\n" + 
+//				"                             board_id, \r\n" + 
+//				"                             writer, \r\n" + 
+//				"                             subject, \r\n" + 
+//				"                             content, \r\n" + 
+//				"                             regdate, \r\n" + 
+//				"                             hitcount, \r\n" + 
+//				"                             ip, \r\n" + 
+//				"                             passwd, \r\n" + 
+//				"                             group_no, \r\n" + 
+//				"                             level_no, \r\n" + 
+//				"                             order_no\r\n" + 
+//				"                      FROM   article";
+//		// ê²€ìƒ‰ìœ í˜•ì—ë”°ë¥¸ whereì ˆ ì¶”ê°€
+//		if(searchType != null) {
+//			// ê²€ìƒ‰ìœ í˜•ë³„ whereì ˆ ì¶”ê°€
+//			if(searchType != null) {
+//				switch (searchType) {
+//					case "subject":
+//						sql += "WHERE subject = ? \r\n";
+//						break;
+//					case "content":
+//						sql += "WHERE content LIKE ? \r\n";
+//						searchValue = "%" + searchValue + "%";
+//						break;
+//					case "writer":
+//						sql += "WHERE writer = ? \r\n";
+//						break;
+//				}
+//			}
+//		}
+//		sql += "	ORDER BY regdate DESC)) \r\n" + //ORDER BY regdate DESC ì–´ë””ë“¤ì–´ê°€ì•¼ë¼,,ã… ã… ã… 
+//			   "WHERE request_page=?";
 		
+		String sql = "SELECT article_id, \r\n" 
+	            + "board_id,\r\n" 
+	            + "writer,   \r\n" 
+	            + "subject,    \r\n"
+	            + "content, \r\n" 
+	            + "ip, \r\n" 
+	            + "passwd,\r\n" 
+	            + "group_no,  \r\n" 
+	            + "level_no,  \r\n" 
+	            + "order_no,\r\n"
+	            + "ATTACH_FILE,\r\n" 
+	            + "regdate,\r\n" 
+	            + "hitcount \r\n"
+	            + "FROM   (SELECT Ceil(ROWNUM / ?)                      request_page, \r\n"
+	            + "               subject, \r\n" 
+	            + "               writer, \r\n"
+	            + "               To_char(regdate, 'YYYY-MM-DD HH24:MI') regdate, \r\n" 
+	            + "               ip, \r\n"
+	            + "               hitcount, \r\n" 
+	            + "               article_id, \r\n" 
+	            + "board_id," 
+	            + "content,"
+	            + "passwd," 
+	            + "group_no," 
+	            + "level_no," 
+	            + "order_no," 
+	            + "ATTACH_FILE"
+	            + "        FROM   (SELECT subject, \r\n" 
+	            + "                       writer, \r\n"
+	            + "                       regdate, \r\n" 
+	            + "                       ip, \r\n"
+	            + "                       hitcount, \r\n" 
+	            + "                       article_id, \r\n" 
+	            + "board_id,"
+	            + "content," 
+	            + "passwd," 
+	            + "group_no," 
+	            + "level_no," 
+	            + "order_no," 
+	            + "ATTACH_FILE"
+	            + "                FROM   article \r\n" 
+	            + "                WHERE  board_id = 1 ";
+
+	      // ê²€ìƒ‰ ìœ í˜•ë³„ WHERE ì ˆ ë™ì  ì¶”ê°€
+	      if (searchType != null) {
+	         switch (searchType) {
+	         case "subject":
+	            sql += "AND subject  LIKE ? \r\n";
+	            searchValue = "%" + searchValue + "%";
+	            break;
+	         case "content":
+	            sql += "AND content LIKE ? \r\n";
+	            searchValue = "%" + searchValue + "%";
+	            break;
+	         case "writer":
+	            sql += "AND writer = ?";
+	            break;
+
+	         }
+	      }
+	      sql    += "ORDER  BY group_no DESC, \r\n" 
+	            + "                          order_no ASC)) \r\n"
+	            + "WHERE  request_page = ?";
+
 		try {
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, listSize);
 			
-			//ÀüÃ¼°Ë»ö ¾Æ´Ñ°æ¿ì
+			//ì „ì²´ê²€ìƒ‰ ì•„ë‹Œê²½ìš°
 			if(searchType != null){
 				pstmt.setString(2, searchValue);
 				pstmt.setInt(3, page);
-			}else{// ÀüÃ¼°Ë»öÀÎ °æ¿ì
+			}else{// ì „ì²´ê²€ìƒ‰ì¸ ê²½ìš°
 				pstmt.setInt(2, page);
 			}
 			
@@ -466,7 +587,7 @@ public class JdbcArticleDao implements ArticleDao {
 	}
 
 	@Override
-	// °Ë»ö¿äÃ»¿¡ µû¸¥ °ª ¹İÈ¯
+	// ê²€ìƒ‰ìš”ì²­ì— ë”°ë¥¸ ê°’ ë°˜í™˜
 	public int countBySearch(String searchType, String searchValue) throws Exception {
 		int count = 0;
 		Connection con = null;
@@ -474,9 +595,9 @@ public class JdbcArticleDao implements ArticleDao {
 		ResultSet rs = null;
 		
 		String sql = "SELECT COUNT(article_id) count\r\n" + 
-					 "FROM article\r\n";  //°Ô½Ã±Û ÀüÃ¼ ¼ö °¡Á®¿È
+					 "FROM article\r\n";  //ê²Œì‹œê¸€ ì „ì²´ ìˆ˜ ê°€ì ¸ì˜´
 		
-		// °Ë»öÀ¯Çüº° whereÀı Ãß°¡
+		// ê²€ìƒ‰ìœ í˜•ë³„ whereì ˆ ì¶”ê°€
 		if(searchType != null) {
 			switch (searchType) {
 				case "subject":
@@ -495,7 +616,7 @@ public class JdbcArticleDao implements ArticleDao {
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(sql);
 			
-			// ÀüÃ¼°Ë»ö ¾Æ´Ñ°æ¿ì
+			// ì „ì²´ê²€ìƒ‰ ì•„ë‹Œê²½ìš°
 			if(searchType != null) {
 				pstmt.setString(1, searchValue);
 			}
@@ -517,9 +638,5 @@ public class JdbcArticleDao implements ArticleDao {
 	public int countBySearch(Params params) throws Exception {
 		return countBySearch(params.getSearchType(), params.getSearchValue());
 	}
-
-	
-
-
 
 }

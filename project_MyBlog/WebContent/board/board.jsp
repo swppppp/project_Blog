@@ -7,8 +7,7 @@
 <%@page import="kr.or.kosta.blog.user.dao.DaoFactory"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%
-DaoFactory factory = (DaoFactory)application.getAttribute("factory");
-ArticleDao dao = factory.getArticleDao();
+ArticleDao dao = (ArticleDao)application.getAttribute("articleDao");
 //List<Article> list = dao.listAll();
 
 // 페이징처리
@@ -100,8 +99,9 @@ pageBuilder.build();
         <form>
           <select name="searchType">
             <option value="">전체</option>
-            <option value="id">아이디</option>
-            <option value="name">이름</option>
+            <option value="subject">제목</option>
+            <option value="writer">작성자</option>
+            <option value="content">내용</option>
           </select>
           <input type="text" name="searchValue" placeholder="Search..">
           <input type="submit" value="검색">
@@ -131,7 +131,20 @@ pageBuilder.build();
           <input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
                <tr class="<%= (i%2)== 0 ? "w3-white" : "" %>" onclick="location.href='article.jsp?article_id=<%=article.getArticle_id() %>'" >
                 <td><%=(rowCount - listSize * (params.getPage()-1) ) - i %></td>
+                <%if(article.getLevel_no()==0){ %>
                 <td><%=article.getSubject() %></td>
+                <%}else{
+                	int n = article.getLevel_no();
+                	String re="";
+                	for(int j=0; j<n; j++){
+                		re+="[re]";
+                	}
+                	re+=": ";
+                %>
+                <td><%=re+article.getSubject() %></td>
+                <%
+                }
+                %>
                 <td><%=article.getWriter() %></td>
                 <td><%=article.getRegdate() %></td>
                 <td><%=article.getIp() %></td>

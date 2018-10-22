@@ -92,8 +92,10 @@ article페이지 입니다.<br>
 
 <form action="article_form.jsp" method="post" style="display: inline;">
 	<input type="submit" value="Reply"><%-- 답글 --%>
+	<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
 	<input type="hidden" name="group_no" value="<%=article.getGroup_no() %>">
 	<input type="hidden" name="origin_subject" value="<%=article.getSubject() %>">
+	<input type="hidden" name="level_no" value="<%=article.getLevel_no() %>">
 </form>
 <%
 if(article.getWriter().equals(loginId)){
