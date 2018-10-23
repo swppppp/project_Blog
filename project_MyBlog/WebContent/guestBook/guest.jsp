@@ -54,7 +54,7 @@ for(Cookie cookie : cookies){
 		<jsp:include page="/includes/navigator.jsp"/>
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('../Resources/img/home-bg.jpg')">
+    <header class="masthead" style="background-image: url('../Resources/img/about-bg.jpg'); height:400px;">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
@@ -89,7 +89,7 @@ for(Cookie cookie : cookies){
 			}else{
 			%>
 			<textarea rows="4" cols="50" disabled placeholder="need a login"></textarea>
-            <button type="button" disabled class="btn btn-primary" id="sendMessageButton">확인</button>
+            <button type="button" data-toggle="tooltip" title="로그인 후 이용가능합니다." disabled class="btn btn-primary" id="sendMessageButton">확인</button>
             <%
 			}
             %>

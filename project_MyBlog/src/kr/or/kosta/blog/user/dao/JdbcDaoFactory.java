@@ -22,7 +22,11 @@ public class JdbcDaoFactory extends DaoFactory {
 		Method method;
 		try {
 			method = cls.getMethod("setDataSource", DataSource.class);
+			if(DaoFactory.getDataSource() == null) {
 			method.invoke(dao, createDataSource());
+			} else {
+				method.invoke(dao, getDataSource());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -37,7 +41,11 @@ public class JdbcDaoFactory extends DaoFactory {
 		Method method;
 		try {
 			method = cls.getMethod("setDataSource", DataSource.class);
-			method.invoke(dao, createDataSource());
+			if(DaoFactory.getDataSource() == null) {
+				method.invoke(dao, createDataSource());
+				} else {
+					method.invoke(dao, getDataSource());
+				}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,7 +60,11 @@ public class JdbcDaoFactory extends DaoFactory {
 		Method method;
 		try {
 			method = cls.getMethod("setDataSource", DataSource.class);
-			method.invoke(dao, createDataSource());
+			if(DaoFactory.getDataSource() == null) {
+				method.invoke(dao, createDataSource());
+				} else {
+					method.invoke(dao, getDataSource());
+				}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,7 +78,11 @@ public class JdbcDaoFactory extends DaoFactory {
 		Method method;
 		try {
 			method = cls.getMethod("setDataSource", DataSource.class);
-			method.invoke(dao, createDataSource());
+			if(DaoFactory.getDataSource() == null) {
+				method.invoke(dao, createDataSource());
+				} else {
+					method.invoke(dao, getDataSource());
+				}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

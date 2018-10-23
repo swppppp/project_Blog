@@ -21,7 +21,7 @@ for(Cookie cookie2 : cookies){
 
 // 페이징처리
 // 페이지당 보여지는 게시글목록 수
-int listSize = 5;
+int listSize = 3;
 // 한 화면의 페이지 수
 int pageSize = 5;
 
@@ -42,9 +42,6 @@ if(searchType == null || searchType.equals("")){
 // 요청파라미터 포장
 Params params = new Params(Integer.parseInt(requestPage), listSize, pageSize, searchType, searchValue);
 List<Article> list = dao.listByPage(params);
-for(Article art: list){
-	System.out.println(art.getIsdel());
-}
 
 // 페이지 처리에 필요한 검색 갯수 DB조회
 int rowCount = dao.countBySearch(params);
@@ -98,7 +95,7 @@ pageBuilder.build();
 		<jsp:include page="/includes/navigator.jsp"/>
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('../Resources/img/home-bg.jpg')">
+    <header class="masthead" style="background-image: url('../Resources/img/post-bg.jpg'); height:400px;">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
@@ -129,6 +126,8 @@ pageBuilder.build();
       </div>
 <%--검색폼 끝 --%>
 
+        
+
 <%-- article목록 보여주는 table --%>
       <div class="w3-responsive w3-card-4">
         <table class="w3-table w3-striped w3-bordered">
@@ -146,12 +145,11 @@ pageBuilder.build();
           <%
           for(int i=0; i<list.size(); i++){
         	  Article article = list.get(i);
-        	  //System.out.println("지워진글인가요: "+article.getIsdel());
         	  if(article.getIsdel() == null){
           %>
           <form action="article.jsp">
           <input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
-               <tr class="<%= (i%2)== 0 ? "w3-white" : "" %>" onclick="location.href='article.jsp?article_id=<%=article.getArticle_id() %>'" >
+               <tr onclick="location.href='article.jsp?article_id=<%=article.getArticle_id() %>'" onMouseOver=this.style.backgroundColor="#b2eaf7" onmouseout=this.style.backgroundColor="#ffffff" >
                 <td><%=(rowCount - listSize * (params.getPage()-1) ) - i %></td>
                 <%if(article.getLevel_no()==0){ %>
                 <td><%=article.getSubject() %></td>
@@ -174,7 +172,7 @@ pageBuilder.build();
                 <td></td>
               </tr>
               <%}else{ %>
-              <tr class="<%= (i%2)== 0 ? "w3-white" : "" %>">
+              <tr onMouseOver=this.style.backgroundColor="#cccccc" onmouseout=this.style.backgroundColor="#ffffff">
               <td><%=(rowCount - listSize * (params.getPage()-1) ) - i %></td>
               <td colspan="5" style="text-align: center;">작성자에 의해 삭제된 게시물 입니다.</td>
               </tr>
@@ -239,8 +237,9 @@ pageBuilder.build();
 <button class="btn btn-primary" onclick="location.href='/index2.jsp'">HOME</button>
 <%if(cookie == null){ %>
 <button disabled class="btn btn-primary" data-toggle="tooltip" title="로그인 후 이용가능합니다.">WRITE</button>
-<%}else{ %>
-<button disabled class="btn btn-primary" onclick="location.href='article_form.jsp'">WRITE</button>
+<%}
+else{ %>
+	<button class="btn btn-primary" onclick="location.href='article_form.jsp'">WRITE</button>
 <%} %>
   </div>
 </div>
@@ -256,8 +255,6 @@ pageBuilder.build();
 	
 	<!-- Custom scripts for this template -->
     <script src="../Resources/js/clean-blog.min.js"></script> 
-	
-
 
 </body>
 </html>

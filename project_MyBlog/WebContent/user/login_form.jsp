@@ -8,6 +8,8 @@ for(Cookie cookie:cookies){
 		rcookie = cookie;
 	}
 }
+//로그인 성공여부확인을 위한 값
+String check=request.getParameter("checkResult");
 %>
 <!DOCTYPE html>
 <html>
@@ -61,6 +63,14 @@ for(Cookie cookie:cookies){
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>Login Fresiwon Blog</p>
+          <%if(check == null || check.length()==0){
+          %>
+          <span style="display:none; color:red;">아이디와 비밀번호를 확인해 주세요</span>
+          <%}else{ 
+          %>
+          <span style="color:red;">아이디와 비밀번호를 확인해 주세요</span>     
+          <%}
+          %>
           <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
           <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
           <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->

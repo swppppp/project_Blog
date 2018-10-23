@@ -39,12 +39,11 @@ if(user!=null){
 	}
 	response.sendRedirect(application.getContextPath()+"/index2.jsp");
 }else{
-	// 되돌아가서 틀렸음을 알려주기
-%>
-<script>
-  alert("회원이 아닙니다");
-  history.back();
-</script>
-<%  
-}
-%>
+	   // 되돌아가서 틀렸음을 알려주기
+	%>
+	<jsp:forward page="/user/login_form.jsp">
+	   <jsp:param value="fail" name="checkResult"/>
+	</jsp:forward>
+	<%  
+	}
+	%>

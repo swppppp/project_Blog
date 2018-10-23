@@ -63,15 +63,15 @@
                 <label>Id</label>
 <% String res = request.getParameter("checkResult");
 String id = request.getParameter("id");
-System.out.println("결과값: "+res);
 if(res == null || res.length()==0){%>
-<input type="text" style="width:75%;" class="form-control" placeholder="Id" id="id" name="id" required data-validation-required-message="필수 입력란 입니다.">
+<input type="text" style="width:75%;" class="form-control" placeholder="Id" id="id" name="checkedId" required data-validation-required-message="필수 입력란 입니다.">
 <button type="submit" id="dupCheck" class="btn btn-primary">중복확인</button>
 <!-- <span style="display: red; color:red;">아이디 중복확인을 해주세요.</span> -->
 <%} else if(res.equals("checked")){ %>
                 <input type="text" readonly value="<%=id %>" style="width:75%;" class="form-control" placeholder="Id" id="id" name="id" required data-validation-required-message="필수 입력란 입니다.">
 				<button type="submit" id="dupCheck" class="btn btn-primary">중복확인</button>
 <span style="color:#0085A1;">멋진 아이디이군요!</span>
+
 <%} else if(res.equals("duplicated")){%>
                 <input type="text" style="width:75%;" class="form-control" placeholder="Id" id="id" name="id" required data-validation-required-message="필수 입력란 입니다.">
 				<button type="submit" id="dupCheck" class="btn btn-primary">중복확인</button>
@@ -81,6 +81,7 @@ if(res == null || res.length()==0){%>
 			
           <form action="join_action.jsp" onSubmit="return validate()" method="post" name="sentMessage" id="contactForm" ><!-- novalidate -->
 <span style="display: none; color:red;">id alert</span>
+<input type="hidden" id="checkedId" name="id">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
@@ -120,7 +121,7 @@ if(res == null || res.length()==0){%>
             <br>
             <div id="success"></div>
             <div class="form-group">
-              <button type="submit" disabled="disabled" class="btn btn-primary" id="sendMessageButton">Join</button>
+              <button type="submit" disabled="disabled" class="btn btn-primary" id="sendMessageButton" onclick="includeId();">Join</button>
             </div>
           </form>
         </div>
@@ -133,6 +134,13 @@ if(res == null || res.length()==0){%>
     <footer>
 		<jsp:include page="../includes/footer.jsp"/>
     </footer>
+
+<script type="text/javascript">
+function includeId() {
+var idVal = document.getElementById('id').value;
+document.getElementById('checkedId').value = idVal;
+}
+</script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="../Resources/vendor/jquery/jquery.min.js"></script>

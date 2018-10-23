@@ -1,5 +1,6 @@
 <%@page import="kr.or.kosta.blog.user.dao.JdbcDaoFactory"%>
 <%@page import="kr.or.kosta.blog.user.dao.DaoFactory"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%
 request.setCharacterEncoding("utf-8");
 %>
@@ -40,7 +41,7 @@ request.setCharacterEncoding("utf-8");
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
               <h1>Fresiwon Blog</h1>
-              <span class="subheading">A Blog Theme by Start Bootstrap</span>
+              <span class="subheading">My Blog Project</span>
             </div>
           </div>
         </div>
@@ -67,9 +68,9 @@ request.setCharacterEncoding("utf-8");
           </div>
           <hr>
           <div class="post-preview">
-            <a href="post.html">
+            <a href="postme.jsp">
               <h2 class="post-title">
-                I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
+               	제가 올린거에요..:)
               </h2>
             </a>
             <p class="post-meta">Posted by

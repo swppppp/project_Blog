@@ -86,7 +86,7 @@ Article article = dao.read(article_id);
 		</tr>
 		<tr height="300px">
 		  <td colspan="4">
-		  <textarea style="height: 300px;" col="50" row="40" class="form-control" name="content" ><%=article.getContent() %></textarea>
+		  <textarea style="height: 300px;" cols="50" rows="40" class="form-control" name="content" ><%=article.getContent() %></textarea>
 		  </td>
 		</tr>
 	</table>

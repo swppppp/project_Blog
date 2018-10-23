@@ -31,6 +31,7 @@ public abstract class DaoFactory {
 	private static final int INIT_SIZE = 2;
 	private static final int MAX_TOTAL = 10;
 	private static final int MAX_IDLE = 5;
+	private static BasicDataSource dataSource;
 	
 	public DataSource createDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
@@ -41,6 +42,10 @@ public abstract class DaoFactory {
 		dataSource.setInitialSize(INIT_SIZE);
 		dataSource.setMaxTotal(MAX_TOTAL);
 		dataSource.setMaxIdle(MAX_IDLE);
+		return dataSource;
+	}
+	
+	public static BasicDataSource getDataSource() {
 		return dataSource;
 	}
 	

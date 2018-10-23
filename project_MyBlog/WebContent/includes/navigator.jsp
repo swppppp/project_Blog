@@ -2,9 +2,11 @@
 <%
 Cookie cookie = null;
 Cookie[] cookies = request.getCookies();
-for(Cookie cookie2 : cookies){
-	if(cookie2.getName().equals("loginId")){
-		cookie = cookie2;
+if (cookies != null) {
+	for(Cookie cookie2 : cookies){
+		if(cookie2.getName().equals("loginId")){
+			cookie = cookie2;
+		}
 	}
 }
 %>
@@ -20,10 +22,6 @@ for(Cookie cookie2 : cookies){
             <li class="nav-item">
               <a class="nav-link" href="../index2.jsp">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">About Me</a>
-            </li>
-            <li class="nav-item">
             <li class="nav-item">
               <a class="nav-link" href="../guestBook/guest.jsp">Guest Book</a>
             </li>

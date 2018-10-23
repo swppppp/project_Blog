@@ -26,6 +26,7 @@ function eventRegist() {
 		
 	}
 	
+	
 }
 
 function validate(inputField) {
@@ -72,7 +73,7 @@ function validate(inputField) {
 //			return false;
 //		}
 		if(!reg.test(inputVal)){ 
-			showAlert('비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용해 주세요');
+			showAlert('비밀번호는 8~16자 영문 대 소문자, 숫자를 사용해 주세요', target, 'red');
 			return false;
 		}else{
 			target.style="display:none";
@@ -111,7 +112,6 @@ function idCheck(){
 
 function showAlert(message, target, color) {
 	target.innerText = message;
-	//var styleTxt = "display: block; color: "+color;
 	target.style ="display: block; color:"+color;
 }
 

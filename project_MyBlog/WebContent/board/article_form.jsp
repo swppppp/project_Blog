@@ -13,6 +13,7 @@ for(Cookie cookie:cookies){
 
 //답글인지 아닌지 확인을 위한 group_no값 확인(null이면 원글, null이 아니면 답글)
 String group_no = request.getParameter("group_no");
+System.out.println("group_no값"+group_no);
 //댓글에 대한 댓글확인을 위한 level_no값, 원글Id
 String level_no = request.getParameter("level_no");
 String rId = request.getParameter("article_id"); // 대댓글을 위한 부모 id값
@@ -75,6 +76,7 @@ System.out.println("가져온 값들: "+group_no +", "+level_no+", "+rId);
 <div class="container">
 <form action="article_action.jsp" method="post" id="contactForm">
 	<%if(group_no == null || group_no.length()==0){
+		System.out.println("게시글을쓰려들어옴");
 	%>
 	<table border="1px black">
 		<tr>

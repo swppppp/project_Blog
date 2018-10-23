@@ -267,7 +267,7 @@ public class JdbcArticleDao implements ArticleDao {
 		}
 	}
 
-	@Override
+	@Override //게시글완전삭제
 	public void delete(int article_id) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;

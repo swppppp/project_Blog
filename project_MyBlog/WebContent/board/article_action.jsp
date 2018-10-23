@@ -10,14 +10,22 @@ request.setCharacterEncoding("utf-8");
 // 답글인지 원글인지 확인을 위한 그룹넘버값 get
 String group_no = request.getParameter("group_no");
 // 답답글인지 확인을 위한 level_no값
-int level_no = Integer.parseInt(request.getParameter("level_no"));
-level_no += 1;
-System.out.println("action폼에서 level증가: "+level_no);
+
+int level_no=0;
+if(request.getParameter("level_no")!=null){
+	System.out.println("레벨 널아닐때");
+	level_no = Integer.parseInt(request.getParameter("level_no"));
+	System.out.println(level_no);
+	level_no += 1;
+}
+
+//System.out.println("action폼에서 level증가: "+level_no);
 String rId = request.getParameter("rId");
 
 // 게시글 생성을 위한 articleDao get
 ArticleDao dao = (ArticleDao)application.getAttribute("articleDao");
 if(group_no == null || group_no.length()==0){
+System.out.println("원글작성분기들어옴");
 	// 원글 게시글작성일 경우
 %>
 <jsp:useBean id="article" class="kr.or.kosta.blog.article.dto.Article" scope="request">
@@ -32,6 +40,7 @@ dao.create(article);
 response.sendRedirect("/board/board.jsp");
 }else if(group_no != null && level_no ==1){
 //답글 작성인 경우
+System.out.print("답글작성들어옴");
 %>
 <jsp:useBean id="reply" class="kr.or.kosta.blog.article.dto.Article" scope="request">
   <jsp:setProperty name="reply" property="writer" param="writer"/>
@@ -44,7 +53,6 @@ response.sendRedirect("/board/board.jsp");
 dao.create(reply, Integer.parseInt(group_no));
 response.sendRedirect("/board/board.jsp");
 }else if(level_no > 1){
-	System.out.println("레벨값이 1보다 큰데요..ㅠ");
 %>
 <jsp:useBean id="rerePly" class="kr.or.kosta.blog.article.dto.Article" scope="request">
 	<jsp:setProperty name="rerePly" property="writer" param="writer"/>

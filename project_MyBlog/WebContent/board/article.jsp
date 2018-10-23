@@ -55,7 +55,7 @@ for(Cookie cookie : cookies){
 		<jsp:include page="/includes/navigator.jsp"/>
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('../Resources/img/home-bg.jpg')">
+    <header class="masthead" style="background-image: url('../Resources/img/home-bg.jpg'); height:400px;">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
@@ -93,7 +93,14 @@ for(Cookie cookie : cookies){
 	</table>
 	<div class="form-group">
 <input type="submit" value="List" class="btn btn-primary" id="sendMessageButton" onclick="location.href='board.jsp'"><%-- 목록 --%>
+<%if(loginId == null || loginId.length()==0){
+%>
+	<input type="submit" data-toggle="tooltip" title="로그인 후 이용가능합니다." disabled="disabled" class="btn btn-primary" id="sendMessageButton" value="Reply"><%-- 답글 --%>
+	<input type="submit" data-toggle="tooltip" title="로그인 후 이용가능합니다." class="btn btn-primary" id="sendMessageButton" value="Modify" disabled><!-- 수정 -->
+<input type="submit" data-toggle="tooltip" title="로그인 후 이용가능합니다." class="btn btn-primary" id="sendMessageButton" value="Delete" disabled><!-- 삭제 -->
+	
 
+<%}else{ %>
 <form action="article_form.jsp" method="post" style="display: inline;">
 	<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Reply"><%-- 답글 --%>
 	<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
@@ -107,16 +114,16 @@ if(article.getWriter().equals(loginId)){
 <form action="confirm_pw.jsp" method="post" style="display: inline;">
 	<input type="hidden" name="article_id" value="<%=article.getArticle_id() %>">
 	<input type="hidden" name="user_id" value="<%=loginId %>">
-	<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Modify" name="whatAction"><!-- 수정 -->
-	<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Delete" name="whatAction"><!-- 삭제 -->
+	<input type="submit" data-toggle="tooltip" title="로그인 후 이용가능합니다." class="btn btn-primary" id="sendMessageButton" value="Modify" name="whatAction"><!-- 수정 -->
+	<input type="submit" data-toggle="tooltip" title="로그인 후 이용가능합니다." class="btn btn-primary" id="sendMessageButton" value="Delete" name="whatAction"><!-- 삭제 -->
 </form>
 <%
 }else{
 %>
-<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Modify" disabled><!-- 수정 -->
-<input type="submit" class="btn btn-primary" id="sendMessageButton" value="Delete" disabled><!-- 삭제 -->
+<input type="submit" data-toggle="tooltip" title="작성자만 이용가능합니다." class="btn btn-primary" id="sendMessageButton" value="Modify" disabled><!-- 수정 -->
+<input type="submit" data-toggle="tooltip" title="작성자만 이용가능합니다." class="btn btn-primary" id="sendMessageButton" value="Delete" disabled><!-- 삭제 -->
 <%
-}
+}}
 %>
 	</div>
 	</div>
