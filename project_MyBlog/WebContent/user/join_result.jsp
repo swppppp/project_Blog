@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon - Join</title>
+    <title>Freshiwon - Join</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
               <h1>Join Success</h1>
-              <span class="subheading">Join Fresiwon Blog :-)</span>
+              <span class="subheading">Join Freshiwon Blog :-)</span>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p style='text-align: center;'>Join Fresiwon Blog Success!</p>
+          <p style='text-align: center;'>Join Freshiwon Blog Success!</p>
           <h3 style="font-family: 'Lora', 'Times New Roman', serif;">Your Account Information..</h3>
 		  <p>Id: <%= user.getId()%></p>          	
 		  <p>Name: <%= user.getName()%></p>          	

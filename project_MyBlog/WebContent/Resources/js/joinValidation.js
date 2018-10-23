@@ -33,13 +33,12 @@ function validate(inputField) {
 	var alertEl = document.getElementsByTagName('span');
 	// 입력받은값
 	var inputVal = inputField.value.trim();
-	console.log('입력값은?'+inputVal);
 	// 정규식에 쓰일 변수
 	var reg;
 	
 	// 입력el의 name에 따른 분기
 	switch(inputField.getAttribute('name')){
-	case 'id':
+	case 'checkedId':
 		reg = /^[a-zA-Z0-9]{2,10}$/;
 		var target = alertEl[1];
 		if(!reg.test(inputVal)){

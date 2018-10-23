@@ -40,7 +40,7 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
               <h1>Delete Result</h1>
-              <span class="subheading">Join Fresiwon Blog :-)</span>
+              <span class="subheading">Join Freshiwon Blog :-)</span>
             </div>
           </div>
         </div>

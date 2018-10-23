@@ -31,7 +31,11 @@ for(Cookie cookie : cookies){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon - Free Board</title>
+    <title>Freshiwon - Free Board</title>
+
+	<%--강사님 스타일..가져옴 --%>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/Resources/css/pagination.css">
 
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -45,9 +49,6 @@ for(Cookie cookie : cookies){
     <link href="../Resources/css/clean-blog.min.css" rel="stylesheet">
     <link href="../Resources/css/custom.css" rel="stylesheet">
 
-	<%--강사님 스타일..가져옴 --%>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/Resources/css/pagination.css">
 	
   </head>
 <body>

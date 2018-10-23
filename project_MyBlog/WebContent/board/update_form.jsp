@@ -23,7 +23,7 @@ Article article = dao.read(article_id);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon - Free Board</title>
+    <title>Freshiwon - Free Board</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

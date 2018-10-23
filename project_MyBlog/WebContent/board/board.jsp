@@ -21,7 +21,7 @@ for(Cookie cookie2 : cookies){
 
 // 페이징처리
 // 페이지당 보여지는 게시글목록 수
-int listSize = 3;
+int listSize = 5;
 // 한 화면의 페이지 수
 int pageSize = 5;
 
@@ -70,12 +70,14 @@ pageBuilder.build();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon Blog - Free Board</title>
+    <title>Freshiwon Blog - Free Board</title>
 
+   
+    <!-- Bootstrap core CSS -->
 	<%--강사님 스타일..가져옴 --%>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/Resources/css/pagination.css">
-   
+	<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/Resources/css/pagination.css">	
+ 
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -87,6 +89,7 @@ pageBuilder.build();
     <!-- Custom styles for this template -->
     <link href="../Resources/css/clean-blog.min.css" rel="stylesheet">
     <link href="../Resources/css/custom.css" rel="stylesheet">
+
 
 	
   </head>

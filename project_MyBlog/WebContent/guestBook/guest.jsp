@@ -32,7 +32,7 @@ for(Cookie cookie : cookies){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon - Guest Book</title>
+    <title>Freshiwon - Guest Book</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -61,7 +61,7 @@ for(Cookie cookie : cookies){
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
               <h1>Guest Book</h1>
-              <span class="subheading">Leave a Message for Fresiwon Blog :-)</span>
+              <span class="subheading">Leave a Message for Freshiwon Blog :-)</span>
             </div>
           </div>
         </div>

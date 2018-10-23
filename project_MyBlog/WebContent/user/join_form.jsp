@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon - Join</title>
+    <title>Freshiwon - Join</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -64,16 +64,17 @@
 <% String res = request.getParameter("checkResult");
 String id = request.getParameter("id");
 if(res == null || res.length()==0){%>
-<input type="text" style="width:75%;" class="form-control" placeholder="Id" id="id" name="checkedId" required data-validation-required-message="필수 입력란 입니다.">
+<input type="text" maxlength=10;
+style="width:75%;" class="form-control" placeholder="Id" id="id" name="checkedId" required data-validation-required-message="필수 입력란 입니다.">
 <button type="submit" id="dupCheck" class="btn btn-primary">중복확인</button>
-<!-- <span style="display: red; color:red;">아이디 중복확인을 해주세요.</span> -->
+<span ></span> 
 <%} else if(res.equals("checked")){ %>
                 <input type="text" readonly value="<%=id %>" style="width:75%;" class="form-control" placeholder="Id" id="id" name="id" required data-validation-required-message="필수 입력란 입니다.">
 				<button type="submit" id="dupCheck" class="btn btn-primary">중복확인</button>
 <span style="color:#0085A1;">멋진 아이디이군요!</span>
 
 <%} else if(res.equals("duplicated")){%>
-                <input type="text" style="width:75%;" class="form-control" placeholder="Id" id="id" name="id" required data-validation-required-message="필수 입력란 입니다.">
+                <input type="text" maxlength=10; style="width:75%;" class="form-control" placeholder="Id" id="id" name="id" required data-validation-required-message="필수 입력란 입니다.">
 				<button type="submit" id="dupCheck" class="btn btn-primary">중복확인</button>
 <span style="color:red;">존재하는 아이디 입니다.</span> <%} %>
 				<input type="hidden" id="isDupChecked" name="isDupChecked" value="">
@@ -88,7 +89,7 @@ if(res == null || res.length()==0){%>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Name</label>
-                <input type="text" class="form-control" placeholder="Name" id="name" name="name" required data-validation-required-message="Please enter your name.">
+                <input type="text" maxlength=5; class="form-control" placeholder="Name" id="name" name="name" required data-validation-required-message="Please enter your name.">
 <span style="display: none; color:red;">name alert</span>
                 <p class="help-block text-danger"></p>
               </div>
@@ -96,7 +97,7 @@ if(res == null || res.length()==0){%>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Password</label>
-                <input type="password" class="form-control" placeholder="Password" id="passwd" name="passwd" required data-validation-required-message="Please enter your password.">
+                <input type="password" maxlength=16; class="form-control" placeholder="Password" id="passwd" name="passwd" required data-validation-required-message="Please enter your password.">
 <span style="display: none; color:red;">pass alert</span>
                 <p class="help-block text-danger"></p>
               </div>
@@ -104,7 +105,7 @@ if(res == null || res.length()==0){%>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Password Check</label>
-                <input type="password" class="form-control" placeholder="Password Again" id="passwdCheck" name="passwdCheck" required data-validation-required-message="Please enter your password check.">
+                <input type="password" maxlength=16; class="form-control" placeholder="Password Again" id="passwdCheck" name="passwdCheck" required data-validation-required-message="Please enter your password check.">
 <span style="display: none; color:red;">passCheck alert</span>               
                 <p class="help-block text-danger"></p>
               </div>

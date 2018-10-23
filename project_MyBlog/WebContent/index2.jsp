@@ -14,7 +14,7 @@ request.setCharacterEncoding("utf-8");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon Blog -kosta187</title>
+    <title>Freshiwon Blog -kosta187</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@ request.setCharacterEncoding("utf-8");
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>Fresiwon Blog</h1>
+              <h1>Freshiwon Blog</h1>
               <span class="subheading">My Blog Project</span>
             </div>
           </div>

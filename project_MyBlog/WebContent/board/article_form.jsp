@@ -33,7 +33,7 @@ System.out.println("가져온 값들: "+group_no +", "+level_no+", "+rId);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fresiwon - Free Board</title>
+    <title>Freshiwon - Free Board</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
